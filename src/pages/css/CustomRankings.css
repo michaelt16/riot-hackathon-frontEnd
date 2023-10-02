@@ -1,0 +1,27 @@
+.titleContainer{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding-top: 45px;
+    
+}
+
+.titleText{
+    font-family: "Montserrat";
+    font-size: 40px;
+}
+
+.teamFolderContainer{
+    margin:40px;
+    margin-top: 90px;
+    
+    
+}
+.teamFolder{
+    background-color: #161123;
+    height:105px;
+    width: 702px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    margin-left: 160px;
+}

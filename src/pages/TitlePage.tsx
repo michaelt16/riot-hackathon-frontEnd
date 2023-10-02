@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import video from "../assets/lolesports_trailer.mp4"
-import "./TitlePage.css"
+import "./css/TitlePage.css"
 import { Link, useNavigate } from "react-router-dom";
 export default function TitlePage(): JSX.Element {
     const navigate = useNavigate();
