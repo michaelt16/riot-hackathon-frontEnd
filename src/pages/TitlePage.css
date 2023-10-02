@@ -5,5 +5,67 @@
 }
 
 .videoContainer{
-    filter: brightness(55%);  
+    filter: brightness(55%);   
+}
+
+.mainTitleContainer{
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainTitle{
+    color: #FFF3F3;
+    font-family: "Bebas Neue";
+    font-size: 200px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin:200px;
+    margin-left: 210px;
+}
+.subTitleContainer{
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.subTitle{
+    color: #FFF;
+    font-family: "Montserrat";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal; 
+    margin-left: 660px;
+    margin-top: 400px;
+}
+
+.buttonContainer{
+    width:430px;
+    height:80px;
+    background-color: #D9D9D9;
+    position: absolute;
+    z-index: 1;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 530px;
+    margin-left: 700px;
+}
+.buttonContainer:hover{
+    cursor: pointer;
+}
+
+.buttonText{
+    color: #000;
+    font-family: "Montserrat";
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
