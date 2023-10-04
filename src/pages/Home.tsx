@@ -4,7 +4,9 @@ import "../pages/css/Home.css"
 import leaguesLogo from "../assets/leaguesLogo.png"
 import worldLogo from "../assets/worldsLogo.png"
 import takeoverLogo from "../assets/takeoverLogo.png"
+import brush from "../assets/brush.png"
 import { useNavigate } from "react-router-dom"
+
 export default function Home(): JSX.Element {
    const navigate = useNavigate()
     const tournamentRankingsClick=()=>{
@@ -37,6 +39,10 @@ export default function Home(): JSX.Element {
                   <h3 className="featureText">Custom Rankings</h3>
                 </div>
              </div>
+             <div className="footerContainer">
+               <img className="brushImage"src ={brush}/>
+               <div className="footerBox"></div>
+             </div>  
              </div>
         </div>
     )

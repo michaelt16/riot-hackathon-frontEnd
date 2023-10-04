@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import TitlePage from "../pages/TitlePage";
+import TitlePage from "../pages/LandingPage";
 import Home from "../pages/Home"
 import CustomRankings from "../pages/features/CustomRankings";
 import GlobalRankings from "../pages/features/GlobalRankings";

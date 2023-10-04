@@ -1,52 +1,62 @@
+
 .titlePageContainer{
     width: 100%;
     height:100vh;
     overflow: hidden; 
+    position: relative;
 }
 
 .videoContainer{
-    filter: brightness(55%);   
+    filter: brightness(55%); 
+    width: 100%;  
+    z-index: -2;
 }
 
 .mainTitleContainer{
     position: absolute;
-    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    z-index: 1;
+    width: 100%;
 }
 
 .mainTitle{
     color: #FFF3F3;
     font-family: "Bebas Neue";
-    font-size: 200px;
+    font-size: 110px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    margin:200px;
-    margin-left: 210px;
+    
 }
 .subTitleContainer{
     position: absolute;
-    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    z-index: 1;
 }
 .subTitle{
     color: #FFF;
     font-family: "Montserrat";
-    font-size: 36px;
+    font-size: 25px;
     font-style: normal;
     font-weight: 700;
     line-height: normal; 
-    margin-left: 660px;
-    margin-top: 400px;
+   
+    
 }
 
 .buttonContainer{
-    width:430px;
-    height:80px;
+    width:390px;
+    height:70px;
     background-color: #D9D9D9;
     position: absolute;
     z-index: 1;
@@ -54,8 +64,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 530px;
-    margin-left: 700px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 100%);
+   
+    
 }
 .buttonContainer:hover{
     cursor: pointer;
@@ -64,7 +78,7 @@
 .buttonText{
     color: #000;
     font-family: "Montserrat";
-    font-size: 26px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;

@@ -5,7 +5,6 @@ export default function GlobalRankings(){
     return(
         <div>
              <Navbar/>
-
         </div>
     )
 }

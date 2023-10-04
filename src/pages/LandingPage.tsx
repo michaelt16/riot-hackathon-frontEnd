@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import video from "../assets/lolesports_trailer.mp4"
-import "./css/TitlePage.css"
+import "./css/LandingPage.css"
 import { Link, useNavigate } from "react-router-dom";
 export default function TitlePage(): JSX.Element {
     const navigate = useNavigate();
@@ -17,6 +17,7 @@ export default function TitlePage(): JSX.Element {
     return(
         <div className="titlePageContainer">
             <Navbar/>
+           
             <div className="mainTitleContainer">
                 <h1 className="mainTitle">PREDICT YOUR ESPORTS</h1>
             </div>
@@ -26,8 +27,8 @@ export default function TitlePage(): JSX.Element {
             <div className="buttonContainer" onClick={handleClick}>
                 <h3 className="buttonText">Discover your Team</h3>
             </div>
-            <video className="videoContainer" src={video} muted autoPlay loop/>
-            
+            <video className="videoContainer" src={video} muted autoPlay loop>
+            </video>
            
         </div>
     )

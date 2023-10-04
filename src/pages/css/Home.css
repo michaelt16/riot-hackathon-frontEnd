@@ -19,15 +19,17 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    justify-content: space-around;
-    margin-top: 140px;
+    margin-top: 90px;
+    gap:40px;
+    
 }
 
 .selection{
-    width: 565px;
-    height: 360px;
+    width: 410px;
+    height: 270px;
     background-color: #161123;
     border-radius: 20px; 
+
 }
 
 .selection:hover{
@@ -35,8 +37,8 @@
 }
 
 .leaguesImage, .worldsImage, .takeoverImage{
-    width:565px;
-    height:240px;
+    width:410px;
+    height:190px;
     border-radius: 20px;
 }
 
@@ -48,4 +50,24 @@
     justify-content: center;
     margin-top: 20px;
     font-size: 20px;
+}
+.footerContainer{
+    margin-top: 200px;
+    
+}
+.brushImage{
+    width:100%;
+    position: absolute;
+    bottom:20px;
+
+}
+.footerBox{
+    width: 100%;
+    height:200px;
+    background-color: #181834;
+    position: relative;
+    padding-bottom: 30px;
+    z-index: 1;
+   
+    
 }
