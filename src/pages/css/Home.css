@@ -1,6 +1,6 @@
 .homeContainer{
     background-color:#D9D9D9 ;
-    height:92.3vh;
+    height:100vh;
     
 }
 .titleContainer{
@@ -8,6 +8,7 @@
     justify-content: center; 
     align-items: center; 
     padding-top: 45px;
+   
     
 }
 
@@ -21,7 +22,7 @@
     align-items: center;
     margin-top: 90px;
     gap:40px;
-    
+    padding-bottom: 100px;
 }
 
 .selection{
@@ -50,24 +51,4 @@
     justify-content: center;
     margin-top: 20px;
     font-size: 20px;
-}
-.footerContainer{
-    margin-top: 200px;
-    
-}
-.brushImage{
-    width:100%;
-    position: absolute;
-    bottom:20px;
-
-}
-.footerBox{
-    width: 100%;
-    height:200px;
-    background-color: #181834;
-    position: relative;
-    padding-bottom: 30px;
-    z-index: 1;
-   
-    
 }

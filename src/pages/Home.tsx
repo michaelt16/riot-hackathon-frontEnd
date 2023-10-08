@@ -4,8 +4,9 @@ import "../pages/css/Home.css"
 import leaguesLogo from "../assets/leaguesLogo.png"
 import worldLogo from "../assets/worldsLogo.png"
 import takeoverLogo from "../assets/takeoverLogo.png"
-import brush from "../assets/brush.png"
+
 import { useNavigate } from "react-router-dom"
+import Footer from "../components/Footer"
 
 export default function Home(): JSX.Element {
    const navigate = useNavigate()
@@ -19,9 +20,9 @@ export default function Home(): JSX.Element {
       navigate("/customRanks")
     }
     return(
-        <div>
+      <div className="homeContainer">
             <Navbar/>
-            <div className="homeContainer">
+            
              <div className="titleContainer">
                 <h1 className="titleText">Select a Feature</h1>
              </div>
@@ -38,13 +39,12 @@ export default function Home(): JSX.Element {
                   <img className="takeoverImage" src = {takeoverLogo}/> 
                   <h3 className="featureText">Custom Rankings</h3>
                 </div>
+                
              </div>
-             <div className="footerContainer">
-               <img className="brushImage"src ={brush}/>
-               <div className="footerBox"></div>
-             </div>  
-             </div>
+             <Footer/>
+             
         </div>
+        
     )
 
 }

@@ -41,3 +41,26 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+
+/* This will change the width of the scrollbar */
+&::-webkit-scrollbar {
+    width: 7px;
+	
+}
+
+/* This will change the background color of the scrollbar */
+&::-webkit-scrollbar-track {
+     background: #f1f1f1;
+ }
+
+ /* This will change the color of the scroll thumb */
+ &::-webkit-scrollbar-thumb {
+    background: #888;
+	
+}
+
+    /* This will change the color of the scroll thumb on hover */
+&::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

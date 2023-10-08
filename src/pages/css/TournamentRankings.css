@@ -1,0 +1,49 @@
+.tournamentRankPage{
+    background-color:#D9D9D9  ;
+    height:auto;
+    
+    /* change to auto later */
+}
+
+.headerTitleContainer{
+    display: flex;
+    font-family: "Montserrat";
+    align-items: center; 
+    margin-bottom: 50px;
+    font-size: 25px;
+    margin: 60px;
+}
+.regionContainer{
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    justify-content: center;
+    align-items: center;
+}
+.regionContainer:hover{
+    cursor: pointer;
+}
+
+.regionCard{
+    width: 370px;
+    margin:10px;
+    margin-bottom: 40px;
+    height: 220px;
+    background-color: #161123;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding:10px;
+}
+
+.tournamentName{
+    color: white;
+    font-family: "Montserrat";
+    font-size: 14px;
+}
+.regionCardIcons{
+    width:150px;
+    margin-bottom: 15px;
+
+}

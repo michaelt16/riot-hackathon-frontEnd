@@ -6,10 +6,18 @@
     position: relative;
 }
 
+.videoContainer2{
+    filter: brightness(55%); 
+    width: 130;  
+    position: absolute;
+    z-index: -1;
+    margin-top: -140px;
+}
+
 .videoContainer{
     filter: brightness(55%); 
-    width: 100%;  
-    z-index: -2;
+    width:100%;
+
 }
 
 .mainTitleContainer{
