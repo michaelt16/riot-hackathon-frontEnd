@@ -1,0 +1,28 @@
+.standingsText{
+    margin:30px;
+    margin-right: 50px;
+}
+
+.standingsWindow{
+   
+}
+.standingsRow{
+    height:40px;
+    margin-left: 60px;
+    margin-bottom: 40px;
+    display: flex;
+    border: red;
+    
+}
+.standingsFontSize{
+    font-size: 30px;
+    margin-right: 20px;
+}
+.teamFontSize{
+    font-size:30px;
+}
+
+.teamLogo{
+    width: 50px;
+    height:50px;
+}

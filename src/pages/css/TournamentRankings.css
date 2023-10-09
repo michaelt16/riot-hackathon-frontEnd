@@ -27,7 +27,7 @@
 .regionCard{
     width: 370px;
     margin:10px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     height: 220px;
     background-color: #161123;
     display: flex;
@@ -45,5 +45,8 @@
 .regionCardIcons{
     width:150px;
     margin-bottom: 15px;
+}
 
+.yearContainer{
+    padding:20px;
 }

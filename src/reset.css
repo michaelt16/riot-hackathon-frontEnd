@@ -64,3 +64,6 @@ table {
 &::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+body {
+	user-select: none;
+  }

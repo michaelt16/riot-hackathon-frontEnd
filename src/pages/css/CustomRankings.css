@@ -25,7 +25,7 @@
     overflow: scroll;
     overflow-x: hidden;
     height: 72vh;
-    width: 86vh;
+    width: 79vh;
 
     /* This will change the width of the scrollbar */
     &::-webkit-scrollbar {
@@ -71,7 +71,6 @@
    
 }
 .teamLogo{
-  
     width:45px;
     height: 45px;
     padding:5px;
@@ -98,22 +97,22 @@
 .orderContainer{
     height: 72vh;
     width: 90vh;
-    margin-left: 20px;
+    margin-left: 90px;
     background-color: #161123;
     border-radius: 20px;
-    
-    padding-top:10px;
+    padding-top:15px;
 }
 
 .orderButton{
-    width: 160px;
-    height: 72px;
+    width: 130px;
+    height: 32px;
     background-color: #D9D9D9;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: "Montserrat";
+    font-size: 12px;
 }
 .orderButton:hover{
     cursor: pointer;
@@ -121,7 +120,7 @@
 
 .orderHeader{
     width: 90vh;
-    height: 10vh;
+    height: 8vh;
     display: flex;
     justify-content: center;
 }
@@ -131,4 +130,28 @@
     height:62vh;
     background-color: #161123;
     border-radius: 20px;
+    overflow: scroll;
+    overflow-x: hidden;
+     /* This will change the width of the scrollbar */
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* This will change the background color of the scrollbar */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* This will change the color of the scroll thumb */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* This will change the color of the scroll thumb on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 }
+
+
+

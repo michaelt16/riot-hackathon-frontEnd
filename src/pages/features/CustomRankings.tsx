@@ -3,15 +3,9 @@ import Navbar from "../../components/Navbar";
 import "../css/CustomRankings.css";
 import Footer from "../../components/Footer";
 import * as data from "../../esports_data/leagues.json";
+import { LeaguesInterface } from '../../interface/LeagueInterface';
+import Standings from "../../components/Standings";
 
-interface LeaguesInterface {
-  region: string;
-  name: string;
-  priority: number;
-  image: string;
-  id: number;
-  isExpanded: boolean;
-}
 //will use context later.
 export default function CustomRankings() {
   const [teamOrderData, setTeamOrderData] = useState<LeaguesInterface[]>([]);
@@ -69,12 +63,13 @@ export default function CustomRankings() {
         <div className="orderContainer">
             <div className="orderHeader">
               <div className="orderButton">
-                  <h1>Order Teams</h1>
+                  <h1>Rank Teams</h1>
               </div>
             </div>
 
             <div className="orderMainContainer">
               {/* populate the rank orders */}
+              <Standings/>
             </div>
         </div>
       </div>

@@ -28,8 +28,8 @@ export default function TitlePage(): JSX.Element {
             <div className="buttonContainer" onClick={handleClick}>
                 <h3 className="buttonText">Discover your Team</h3>
             </div>
-            <video className="videoContainer " src={video} muted autoPlay loop />
-            {/* <video className="videoContainer2 " src={worldsVideo} autoPlay loop /> */}
+            {/* <video className="videoContainer " src={video} muted autoPlay loop /> */}
+            <video className="videoContainer2 " src={worldsVideo} autoPlay loop />
            
         </div>
     )
