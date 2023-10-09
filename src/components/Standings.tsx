@@ -45,7 +45,7 @@ export default function Standings(){
       
     return(
         <div>
-           <img src ="https://static.nocookie.net/lolesports_gamepedia_en/images/8/88/Cloud9logo_square.png/revision/latest?cb=20230426052413.jpg"/>
+           {/* <img src ="https://static.nocookie.net/lolesports_gamepedia_en/images/8/88/Cloud9logo_square.png/revision/latest?cb=20230426052413.jpg"/> */}
             {/* <img src ="https://static.lolesports.com/teams/1631820065346_cloud9-2021-worlds.png"/> */}
             {
               mockData.map((team,index)=>{
