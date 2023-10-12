@@ -6,6 +6,8 @@ import "./css/LandingPage.css"
 import { Link, useNavigate } from "react-router-dom";
 export default function TitlePage(): JSX.Element {
     const navigate = useNavigate();
+    
+    
     const handleClick = ()=>{
         try{
             console.log("running")
@@ -29,7 +31,7 @@ export default function TitlePage(): JSX.Element {
                 <h3 className="buttonText">Discover your Team</h3>
             </div>
             {/* <video className="videoContainer " src={video} muted autoPlay loop /> */}
-            <video className="videoContainer2 " src={worldsVideo} autoPlay loop />
+            <video className="videoContainer2 "  src={worldsVideo} autoPlay loop controls/>
            
         </div>
     )

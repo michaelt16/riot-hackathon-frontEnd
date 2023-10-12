@@ -9,7 +9,7 @@
 .standingsRow{
     height:40px;
     margin-left: 60px;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     display: flex;
     border: red;
     
@@ -18,11 +18,19 @@
     font-size: 30px;
     margin-right: 20px;
 }
+.teamContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 40px;
+}
 .teamFontSize{
     font-size:30px;
 }
 
-.teamLogo{
-    width: 50px;
-    height:50px;
-}
+/* .teamLogo{
+    width: 30px;
+    height:30px;
+    border-radius: 40px;
+    background-color: #d9d9d9;
+} */
