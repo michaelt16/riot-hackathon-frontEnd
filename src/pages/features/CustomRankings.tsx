@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import * as data from "../../esports_data/leagues.json";
 import { LeaguesInterface } from '../../interface/LeagueInterface';
 import Standings from "../../components/Standings";
+import * as tournamentData from "../../esports_data/tournamets.json";
 
 //will use context later.
 export default function CustomRankings() {
@@ -15,7 +16,7 @@ export default function CustomRankings() {
       (a: LeaguesInterface, b: LeaguesInterface) => a.priority - b.priority
     );
     
-    const teamOrderArr: LeaguesInterface[] = sortedData.filter((object: LeaguesInterface) => object.region !== "INTERNATIONAL")
+    const teamOrderArr : LeaguesInterface[] = sortedData.filter((object: LeaguesInterface) => object.region !== "INTERNATIONAL")
       .map((team: LeaguesInterface) => ({
         ...team,
         isExpanded: false,
@@ -26,14 +27,14 @@ export default function CustomRankings() {
 
   const handleFolderClick = (index: number) => {
     setTeamOrderData((prevTeamOrderData) => {
-      const newTeamOrder = prevTeamOrderData.map((currTeam,i)=>({
+      const newTeamOrder = prevTeamOrderData.map((currTeam,i)=>({ 
           ...currTeam,
           isExpanded: i === index ? !currTeam.isExpanded : false
       }))
       return newTeamOrder
     });
   };
-
+  console.log(teamOrderData)
   return (
     <div className="customRankingsContainer">
       <Navbar />
