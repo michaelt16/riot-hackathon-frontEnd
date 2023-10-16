@@ -9,7 +9,46 @@ import * as tournamentData from "../../esports_data/tournamets.json";
 
 //will use context later.
 export default function CustomRankings() {
-  const [teamOrderData, setTeamOrderData] = useState<LeaguesInterface[]>([]);
+  const [regionOrderData, setRegionOrderData] = useState<LeaguesInterface[]>([]);
+
+  const [mockDataLCS, setMockDataLCS] = useState({
+    id: 98767991299243165,
+    teams: [{ name: "C9"},
+            { name: "GG"},
+            { name: "EG"},
+            { name: "TL"},
+            { name: "NRG"},
+            { name: "TSM"},
+            { name: "DIG"},
+            { name: "100"},
+            { name: "FLY"},
+            { name: "IMT"}
+          ]
+  });
+
+  const [mockDataLEC, setMockDataLEC] = useState({
+    id: 98767991302996019,
+    teams: [{ name: "G2"},
+            { name: "FNC"},
+            { name: "EX"},
+            { name: "TH"},
+            { name: "BDS"},
+            { name: "SK"},
+            { name: "MAD"},
+            { name: "KOI"},
+            { name: "AST"},
+            { name: "VIT"}
+          ]
+  });
+
+  const [regionFodlerData, setRegionFolderData] = useState()
+
+//   useEffect(()=>{
+//     tournamentData.default.filter((data) => data.id === "110303581083678395")
+//       .map((tournament)=>{
+//         console.log(tournament)
+//       })
+// },[])
 
   useEffect(() => {
     const sortedData = data.default.sort(
@@ -22,19 +61,41 @@ export default function CustomRankings() {
         isExpanded: false,
       }));
 
-    setTeamOrderData(teamOrderArr);
+    setRegionOrderData(teamOrderArr);
   }, []);
 
-  const handleFolderClick = (index: number) => {
-    setTeamOrderData((prevTeamOrderData) => {
-      const newTeamOrder = prevTeamOrderData.map((currTeam,i)=>({ 
+  const handleFolderClick = (index: number, id:string) => {
+    setRegionOrderData((prevTeamOrderData) => {
+      const newRegionData = prevTeamOrderData.map((currTeam,i)=>({ 
           ...currTeam,
           isExpanded: i === index ? !currTeam.isExpanded : false
       }))
-      return newTeamOrder
+      return newRegionData
     });
+
+    handleFolderPopulation(id)
   };
-  console.log(teamOrderData)
+
+  const handleFolderPopulation= (id:string)=>{
+      //fetch thing
+      //instead of this
+     
+
+      if(mockDataLCS.id ===parseInt(id)){
+        console.log("TEST",mockDataLCS)
+        mockDataLCS.teams.map((team)=>{
+          console.log(team.name)
+        })
+        
+      } 
+      if(mockDataLEC.id ===parseInt(id)){
+        console.log("TEST",mockDataLEC)
+        mockDataLEC.teams.map((team)=>{
+          console.log(team.name)
+        })}
+
+  }
+  console.log(regionOrderData)
   return (
     <div className="customRankingsContainer">
       <Navbar />
@@ -44,16 +105,18 @@ export default function CustomRankings() {
       
       <div className="mainViewContainer">
       <div className="teamFolderWindowContainer">
-        {teamOrderData.map((team, index) => {
+        {regionOrderData.map((team, index) => {
+          // going to fetch depending on id instead
+         
           return (
-            <div key={index}>
-              <div className="teamFolderContainer" onClick={() => handleFolderClick(index)}>
+            <div key={index+1} className="folder"onClick={() => handleFolderClick(index,team.id)}>
+              <div className="teamFolderContainer" >
                 <img className="teamLogo" src={team?.image} />
                 <h3 className="teamName">{team?.region}&nbsp;{team?.name}</h3>
               </div>
               {team.isExpanded && (
                 <div className="expandedContent">
-                 
+                  
                 </div>
               )}
             </div>

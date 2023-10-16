@@ -7,11 +7,13 @@
 
 .headerTitleContainer{
     display: flex;
-    font-family: "Montserrat";
+    font-family: "Bebas Neue";
     align-items: center; 
+    justify-content: center;
     margin-bottom: 50px;
-    font-size: 25px;
+    font-size: 55px;
     margin: 60px;
+ 
 }
 .regionContainer{
     display: flex;
@@ -20,8 +22,9 @@
     justify-content: center;
     align-items: center;
 }
-.regionContainer:hover{
+.regionCard:hover{
     cursor: pointer;
+    transform:scale(1.05);
 }
 
 .regionCard{
