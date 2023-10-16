@@ -14,14 +14,18 @@ export default function Standings(){
         { name: "DIG"},
         { name: "100"},
         { name: "FLY"},
-        { name: "CLG"}
+        { name: "IMT"}
       
       ]);
       
-      const link = "http://127.0.0.1:5000/api/icon/"
+      const imgLink = "http://127.0.0.1:5000/api/icon/"
       const generateImage = (teamName: string)=>{
-        return `${link}${teamName}`
+        return `${imgLink}${teamName}`
       }
+      const tournamentStandingsLink = "http://127.0.0.1:5000/api/tournament-standings/"
+      // useEffect(()=>{
+      //   axios.get(tournamentStandingsLink)
+      // },[])
       
     return(
         <div>

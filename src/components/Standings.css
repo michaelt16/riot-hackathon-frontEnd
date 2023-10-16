@@ -3,19 +3,17 @@
     margin-right: 50px;
 }
 
-.standingsWindow{
-   
-}
 .standingsRow{
     height:40px;
     margin-left: 60px;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
     display: flex;
-    border: red;
+   
+    border-style: solid;
     
 }
 .standingsFontSize{
-    font-size: 30px;
+    font-size: 20px;
     margin-right: 20px;
 }
 .teamContainer{
@@ -25,7 +23,7 @@
     margin-right: 40px;
 }
 .teamFontSize{
-    font-size:30px;
+    font-size:20px;
 }
 
 /* .teamLogo{

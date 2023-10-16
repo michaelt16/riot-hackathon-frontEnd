@@ -36,6 +36,7 @@
 
 .selection:hover{
     cursor: pointer;
+    transform:scale(1.05);
 }
 
 .leaguesImage, .worldsImage, .takeoverImage{

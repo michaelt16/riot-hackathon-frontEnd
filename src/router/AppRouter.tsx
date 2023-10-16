@@ -6,6 +6,7 @@ import CustomRankings from "../pages/features/CustomRankings";
 import GlobalRankings from "../pages/features/GlobalRankings";
 import TournamentRankings from "../pages/features/TournamentRankings";
 import TournamentsStandings from "../pages/features/TournamentStandings";
+import HealthCheck from "../HealthCheck";
 export default function AppRouter(){
     return(
         <BrowserRouter>
@@ -16,6 +17,7 @@ export default function AppRouter(){
             <Route path="/tournamentStandings" element={<TournamentsStandings />} />
             <Route path="/globalRanks" element={<GlobalRankings />} />
             <Route path="/customRanks" element={<CustomRankings />} />
+            <Route path ="/healthCheck" element={<HealthCheck/>}/>
         </Routes>
       </BrowserRouter>
     )

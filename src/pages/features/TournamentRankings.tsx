@@ -23,6 +23,7 @@ export default function TournamentRankings(){
     }, []);
 
     const handleClick = (tournament: LeaguesInterface)=>{
+        
         navigate("/tournamentStandings",{ state: { tournament } })
     }
 
@@ -35,9 +36,9 @@ export default function TournamentRankings(){
 
              <div className="regionContainer">
                 {
-                    teamOrderData.map((tournament,index)=>{
+                    teamOrderData.map((tournament)=>{
                         return(
-                            <div className="regionCard" key={index} onClick={()=>handleClick(tournament)}>
+                            <div className="regionCard" key={tournament.id} onClick={()=>handleClick(tournament)}>
                                 <img className="regionCardIcons" src={tournament?.image} />
                                 <div>
                                     <h3 className="tournamentName">{tournament?.region}&nbsp;{tournament?.name}</h3>

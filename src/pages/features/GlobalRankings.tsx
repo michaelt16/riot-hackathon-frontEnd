@@ -6,7 +6,6 @@ export default function GlobalRankings(){
     return(
         <div className="globalRankingsPage">
              <Navbar/>
-             
         </div>
     )
 }
