@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 
 export default function Home(): JSX.Element {
+
+    
    const navigate = useNavigate()
     const tournamentRankingsClick=()=>{
       navigate("/tournamentRanks")
