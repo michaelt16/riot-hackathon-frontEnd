@@ -43,6 +43,7 @@ export default function CustomRankings() {
   const handleFolderPopulation= (league_id:number)=>{
       //fetch thing
       //instead of this
+      // endpoint bugged need to get rid of teams that dont exist
      axios.get(`http://matthewproject.click/leagueTeams/${league_id}`)
      .then((response)=>{
         const data = response.data
@@ -65,6 +66,19 @@ export default function CustomRankings() {
       setOrderTeamArr(updatedArray);
     }
     
+  }
+
+  const handleRankTeamsButton=()=>{
+    //fetch from the model endpoint and store into orderTeamArr and it will update the standings prop
+    console.log("rerank")
+    const clonedArr = [...orderTeamArr];
+
+    for (let i = clonedArr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [clonedArr[i], clonedArr[j]] = [clonedArr[j], clonedArr[i]];
+    }
+    setOrderTeamArr(clonedArr)
+  
   }
   console.log(orderTeamArr)
   return (
@@ -105,7 +119,7 @@ export default function CustomRankings() {
 
         <div className="orderContainer">
             <div className="orderHeader">
-              <div className="orderButton">
+              <div className="orderButton" onClick={handleRankTeamsButton}>
                   <h1>Rank Teams</h1>
               </div>
             </div>

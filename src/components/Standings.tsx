@@ -39,7 +39,7 @@ export default function Standings(props){
                             <div className="teamFormatted">
                               <h3 className="teamFontSize">{teamInfo.name}</h3>
                               <h3 className="winrateFontSize">
-                                {teamRecord !== null && teamRecord !== '' ? '': formatWinLose(teamRecord) }
+                                {teamRecord !== undefined ? formatWinLose(teamRecord):''}
                               </h3>
                             </div>
                             
