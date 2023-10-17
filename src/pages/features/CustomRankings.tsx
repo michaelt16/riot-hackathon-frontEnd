@@ -2,70 +2,34 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import "../css/CustomRankings.css";
 import Footer from "../../components/Footer";
-import * as data from "../../esports_data/leagues.json";
 import { LeaguesInterface } from '../../interface/LeagueInterface';
 import Standings from "../../components/Standings";
-import * as tournamentData from "../../esports_data/tournamets.json";
+import axios from "axios";
 
-//will use context later.
+
 export default function CustomRankings() {
-  const [regionOrderData, setRegionOrderData] = useState<LeaguesInterface[]>([]);
-
-  const [mockDataLCS, setMockDataLCS] = useState({
-    id: 98767991299243165,
-    teams: [{ name: "C9"},
-            { name: "GG"},
-            { name: "EG"},
-            { name: "TL"},
-            { name: "NRG"},
-            { name: "TSM"},
-            { name: "DIG"},
-            { name: "100"},
-            { name: "FLY"},
-            { name: "IMT"}
-          ]
-  });
-
-  const [mockDataLEC, setMockDataLEC] = useState({
-    id: 98767991302996019,
-    teams: [{ name: "G2"},
-            { name: "FNC"},
-            { name: "EX"},
-            { name: "TH"},
-            { name: "BDS"},
-            { name: "SK"},
-            { name: "MAD"},
-            { name: "KOI"},
-            { name: "AST"},
-            { name: "VIT"}
-          ]
-  });
-
-  const [regionFodlerData, setRegionFolderData] = useState()
-
-//   useEffect(()=>{
-//     tournamentData.default.filter((data) => data.id === "110303581083678395")
-//       .map((tournament)=>{
-//         console.log(tournament)
-//       })
-// },[])
-
+  const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
+  // team array from the fetched data
+  const [teamArr, setTeamArr] = useState([])
+  // add into team arr
+  const [orderTeamArr,setOrderTeamArr]=useState<object>([])
   useEffect(() => {
-    const sortedData = data.default.sort(
-      (a: LeaguesInterface, b: LeaguesInterface) => a.priority - b.priority
-    );
-    
-    const teamOrderArr : LeaguesInterface[] = sortedData.filter((object: LeaguesInterface) => object.region !== "INTERNATIONAL")
-      .map((team: LeaguesInterface) => ({
-        ...team,
-        isExpanded: false,
-      }));
-
-    setRegionOrderData(teamOrderArr);
+      axios.get("http://matthewproject.click/leagues")
+      .then(response=>{
+          const leaguesData = response.data
+          const filterInternational: LeaguesInterface[] = leaguesData.filter((league:LeaguesInterface)=>league.region !== "INTERNATIONAL")
+            .map((filteredLeague: LeaguesInterface)=>({
+              ...filteredLeague,
+              isExpanded: false
+            }))
+          setLeaguesArr(filterInternational)
+      })
   }, []);
 
-  const handleFolderClick = (index: number, id:string) => {
-    setRegionOrderData((prevTeamOrderData) => {
+
+  const handleFolderClick = (index: number, league_id:number) => {
+   
+    setLeaguesArr((prevTeamOrderData) => {
       const newRegionData = prevTeamOrderData.map((currTeam,i)=>({ 
           ...currTeam,
           isExpanded: i === index ? !currTeam.isExpanded : false
@@ -73,29 +37,36 @@ export default function CustomRankings() {
       return newRegionData
     });
 
-    handleFolderPopulation(id)
+    handleFolderPopulation(league_id)
   };
 
-  const handleFolderPopulation= (id:string)=>{
+  const handleFolderPopulation= (league_id:number)=>{
       //fetch thing
       //instead of this
+     axios.get(`http://matthewproject.click/leagueTeams/${league_id}`)
+     .then((response)=>{
+        const data = response.data
+        setTeamArr(data)
+     })
+
      
 
-      if(mockDataLCS.id ===parseInt(id)){
-        console.log("TEST",mockDataLCS)
-        mockDataLCS.teams.map((team)=>{
-          console.log(team.name)
-        })
-        
-      } 
-      if(mockDataLEC.id ===parseInt(id)){
-        console.log("TEST",mockDataLEC)
-        mockDataLEC.teams.map((team)=>{
-          console.log(team.name)
-        })}
-
   }
-  console.log(regionOrderData)
+
+  const handleTeamClick=(e,team)=>{
+    e.stopPropagation();
+    console.log("SINGLE TEAM",team)
+    const teamId = team.id;
+    const teamExists = orderTeamArr.some(existingTeam => existingTeam.id === teamId);
+  
+    if (!teamExists) {
+      // Team is not in the array, so add it
+      const updatedArray = [...orderTeamArr, team];
+      setOrderTeamArr(updatedArray);
+    }
+    
+  }
+  console.log(orderTeamArr)
   return (
     <div className="customRankingsContainer">
       <Navbar />
@@ -105,18 +76,26 @@ export default function CustomRankings() {
       
       <div className="mainViewContainer">
       <div className="teamFolderWindowContainer">
-        {regionOrderData.map((team, index) => {
+        {leaguesArr.map((league, index) => {
           // going to fetch depending on id instead
          
           return (
-            <div key={index+1} className="folder"onClick={() => handleFolderClick(index,team.id)}>
-              <div className="teamFolderContainer" >
-                <img className="teamLogo" src={team?.image} />
-                <h3 className="teamName">{team?.region}&nbsp;{team?.name}</h3>
+            <div key={index+1} className="folder">
+              <div className="leaguesFolderContainer" onClick={(e) => handleFolderClick(index,league.leagues_id)}>
+                <img className="leagueLogo" src={league?.image} />
+                <h3 className="teamName">{league?.region}&nbsp;{league?.name}</h3>
               </div>
-              {team.isExpanded && (
+              {league.isExpanded && (
                 <div className="expandedContent">
-                  
+                  {
+                    teamArr?.map((team)=>{
+                      return(
+                        <div className="folderTeamName" key={team?.id} onClick={(e)=>handleTeamClick(e,team)}>
+                          {team?.team_info.name}
+                        </div>
+                      )
+                    })
+                  }
                 </div>
               )}
             </div>
@@ -133,7 +112,8 @@ export default function CustomRankings() {
 
             <div className="orderMainContainer">
               {/* populate the rank orders */}
-              <Standings/>
+              {/* its gonna be in a form of an array and everytime i click it adds into the prop array */}
+              <Standings data={orderTeamArr}/>
             </div>
         </div>
       </div>

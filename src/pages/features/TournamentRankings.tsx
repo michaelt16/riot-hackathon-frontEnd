@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import "../css/TournamentRankings.css"
-import * as data from "../../esports_data/leagues.json";
 import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { LeaguesInterface } from '../../interface/LeagueInterface';
+import axios from "axios";
   //will use context later.
 export default function TournamentRankings(){
-    const [teamOrderData, setTeamOrderData] = useState<LeaguesInterface[]>([]);
+    const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
+    
     const navigate = useNavigate()
     useEffect(() => {
-      const sortedData = data.default.sort(
-        (a: LeaguesInterface, b: LeaguesInterface) => a.priority - b.priority
-      );
-      
-      const teamOrderArr: LeaguesInterface[] = sortedData.map((team: LeaguesInterface) => ({
-          ...team,
-          isExpanded: false,
-        }));
-      console.log(teamOrderArr)
-      setTeamOrderData(teamOrderArr);
+        axios.get("http://matthewproject.click/leagues")
+        .then(response=>{
+            console.log(response.data)
+            setLeaguesArr(response.data)
+        })
     }, []);
-
-    const handleClick = (tournament: LeaguesInterface)=>{
+    
+    const handleClick = (league: LeaguesInterface)=>{
         
-        navigate("/tournamentStandings",{ state: { tournament } })
+        navigate("/tournamentStandings",{ state: { league } })
     }
 
     return(
@@ -36,12 +32,12 @@ export default function TournamentRankings(){
 
              <div className="regionContainer">
                 {
-                    teamOrderData.map((tournament)=>{
+                    leaguesArr.map((league)=>{
                         return(
-                            <div className="regionCard" key={tournament.id} onClick={()=>handleClick(tournament)}>
-                                <img className="regionCardIcons" src={tournament?.image} />
+                            <div className="regionCard" key={league.leagues_id} onClick={()=>handleClick(league)}>
+                                <img className="regionCardIcons" src={league?.image} />
                                 <div>
-                                    <h3 className="tournamentName">{tournament?.region}&nbsp;{tournament?.name}</h3>
+                                    <h3 className="tournamentName">{league?.region}&nbsp;{league?.name}</h3>
                                 </div>
                                
                             </div>
