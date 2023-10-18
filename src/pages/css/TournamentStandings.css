@@ -162,3 +162,8 @@
 .leftSideStandingsHeader{
     width: 48vh;
 }
+.centerLoader{
+   margin-left: -170px;
+   display: flex;
+   flex-direction: column;
+}

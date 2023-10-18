@@ -41,7 +41,9 @@ export default function Standings(props){
                           <div className="teamContainer">
                             <img className ="teamLogo"/>
                             <div className="teamFormatted">
-                              <h3 className="teamFontSize">{teamInfo.name}</h3>
+                              <h3 className="teamFontSize">
+                              {teamInfo.name !== undefined ? teamInfo.name :''}
+                              </h3>
                               <h3 className="winrateFontSize">
                                 {teamRecord !== undefined ? formatWinLose(teamRecord):''}
                               </h3>

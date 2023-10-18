@@ -4,7 +4,31 @@
     
     /* change to auto later */
 }
-
+.header{
+    display: flex;
+    
+}
+.returnToMain{
+    width: 70vh;
+    display: flex;
+}
+.returnButton{
+    width: 200px;
+    height:50px;
+    background-color: #161123;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Montserrat";
+    border-radius: 20px;
+    color: white;
+    margin-top: 30px;
+    margin-left: 22px;
+}
+.returnButton:hover{
+    cursor: pointer;
+    transform:scale(1.15);
+}
 .headerTitleContainer{
     display: flex;
     font-family: "Bebas Neue";
@@ -52,4 +76,7 @@
 
 .yearContainer{
     padding:20px;
+}
+.space{
+    padding:13vh;
 }

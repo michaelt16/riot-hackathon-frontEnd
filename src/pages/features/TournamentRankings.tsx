@@ -24,20 +24,31 @@ export default function TournamentRankings(){
         navigate("/tournamentStandings",{ state: { league } })
     }
 
+    const handleReturn=()=>{
+        navigate("/home")
+    }
+
     return(
         <div className="tournamentRankPage">
              <Navbar/>
+             <div className="header">
+                <div className="returnToMain">
+                    <div className="returnButton" onClick={handleReturn}>Return</div>
+                </div>
              <div className="headerTitleContainer">
+                
                 <h1>Choose a Tournament</h1>
              </div>
-
+            </div>
              <div className="regionContainer">
-             {leaguesArr.length === 0 ? (
-                // Display the loader component when leaguesArr is empty
-                
-                    <Load />
                
-                 
+            
+             {leaguesArr.length === 0 ? (
+
+                <div className="centerLoader">
+                    <Load />
+                    <div className="space"></div>
+                </div>
             ) : (
                 // Display the region cards when leaguesArr is not empty
                 <div className="regionContainer">

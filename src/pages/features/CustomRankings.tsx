@@ -5,9 +5,11 @@ import Footer from "../../components/Footer";
 import { LeaguesInterface } from '../../interface/LeagueInterface';
 import Standings from "../../components/Standings";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 export default function CustomRankings() {
+  const navigate = useNavigate()
   const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
   // team array from the fetched data
   const [teamArr, setTeamArr] = useState([])
@@ -59,7 +61,7 @@ export default function CustomRankings() {
     console.log("SINGLE TEAM",team)
     const teamId = team.id;
     const teamExists = orderTeamArr.some(existingTeam => existingTeam.id === teamId);
-  
+    
     if (!teamExists) {
       // Team is not in the array, so add it
       const updatedArray = [...orderTeamArr, team];
@@ -80,14 +82,21 @@ export default function CustomRankings() {
     setOrderTeamArr(clonedArr)
   
   }
+  const handleReturn=()=>{
+    navigate("/home")
+}
   console.log(orderTeamArr)
   return (
     <div className="customRankingsContainer">
       <Navbar />
-      <div className="titleContainer">
-        <h1 className="customTeamTitle">Custom Team Rankings</h1>
+      <div className="header">
+           <div className="returnToMain">
+                    <div className="returnButton" onClick={handleReturn}>Return</div>
+                </div>
+        <div className="headerTitleContainer">
+          <h1 className="customTeamTitle">Custom Team Rankings</h1>
+        </div>
       </div>
-      
       <div className="mainViewContainer">
       <div className="teamFolderWindowContainer">
         {leaguesArr.map((league, index) => {
