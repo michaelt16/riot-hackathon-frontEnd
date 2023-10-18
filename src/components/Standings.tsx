@@ -3,6 +3,10 @@ import "./Standings.css"
 import axios from 'axios';
 import fileDownload from 'js-file-download'
 
+interface teamRecord{
+  wins:number,
+  losses:number
+}
 export default function Standings(props){
       // const standingsProp = props.standingsData?.[0].tournamentStandings
       const [standingsData,setStandingsData] =useState()
@@ -18,15 +22,15 @@ export default function Standings(props){
         setStandingsData(props.data)
       }, [props]);
       
-      const formatWinLose = (teamRecord)=>{
+      const formatWinLose = (teamRecord: teamRecord)=>{
        
         return `${teamRecord.wins}W - ${teamRecord.losses}L`
       }
 
       console.log("TESTSTETS",standingsData)
     return(
-        <div>
-         
+        <div >
+          <div className="handleOverflow">
             {
               standingsData?.map((team,index:number)=>{
               const teamInfo = team.team_info
@@ -35,7 +39,7 @@ export default function Standings(props){
                       <div className="standingsRow textFont " key={index}>
                           <h1 className="standingsFontSize">{index+1}. </h1>
                           <div className="teamContainer">
-                            <img className ="teamLogo" />
+                            <img className ="teamLogo"/>
                             <div className="teamFormatted">
                               <h3 className="teamFontSize">{teamInfo.name}</h3>
                               <h3 className="winrateFontSize">
@@ -51,7 +55,7 @@ export default function Standings(props){
             })
             }
                 
-          
+                </div>
         </div>
     )
 }

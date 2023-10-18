@@ -1,6 +1,6 @@
 .tournamentRankPage{
     background-color:#D9D9D9  ;
-    height:auto;
+    min-height: 100vh;
     
     /* change to auto later */
 }

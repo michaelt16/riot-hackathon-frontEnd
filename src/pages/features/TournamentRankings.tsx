@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import { useNavigate } from "react-router-dom";
 import { LeaguesInterface } from '../../interface/LeagueInterface';
 import axios from "axios";
+import Load from "../../components/Load";
   //will use context later.
 export default function TournamentRankings(){
     const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
@@ -31,19 +32,29 @@ export default function TournamentRankings(){
              </div>
 
              <div className="regionContainer">
-                {
-                    leaguesArr.map((league)=>{
-                        return(
-                            <div className="regionCard" key={league.leagues_id} onClick={()=>handleClick(league)}>
-                                <img className="regionCardIcons" src={league?.image} />
-                                <div>
-                                    <h3 className="tournamentName">{league?.region}&nbsp;{league?.name}</h3>
-                                </div>
-                               
-                            </div>
-                        )
-                    })
-                }
+             {leaguesArr.length === 0 ? (
+                // Display the loader component when leaguesArr is empty
+                
+                    <Load />
+               
+                 
+            ) : (
+                // Display the region cards when leaguesArr is not empty
+                <div className="regionContainer">
+                {leaguesArr.map((league) => {
+                    return (
+                    <div className="regionCard" key={league.leagues_id} onClick={() => handleClick(league)}>
+                        <img className="regionCardIcons" src={league?.image} />
+                        <div>
+                        <h3 className="tournamentName">
+                            {league?.region}&nbsp;{league?.name}
+                        </h3>
+                        </div>
+                    </div>
+                    );
+                })}
+                </div>
+  )}
 
                 <div>
              </div>

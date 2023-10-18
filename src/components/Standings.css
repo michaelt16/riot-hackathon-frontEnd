@@ -1,3 +1,4 @@
+
 .standingsText{
     margin:30px;
     margin-right: 50px;
@@ -9,7 +10,7 @@
     margin-bottom: 25px;
     padding-bottom: 3px;
     display: flex;
-    width: 57vh;
+    width: 61vh;
     border-bottom:solid 1px #262a2e;
     border-style: solid;
     
@@ -23,7 +24,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 40px;
+    margin-right: 50px;
 }
 .teamFontSize{
     font-size:13px;
@@ -43,3 +44,32 @@
     border-radius: 40px;
     background-color: #d9d9d9;
 } */
+
+.handleOverflow{
+    width: auto;
+    height:65vh;
+    background-color: #161123;
+    margin-left: 10px;
+    overflow: scroll;
+    overflow-x: hidden;
+     /* This will change the width of the scrollbar */
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* This will change the background color of the scrollbar */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    /* This will change the color of the scroll thumb */
+    &::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* This will change the color of the scroll thumb on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+}

@@ -6,6 +6,7 @@ import { LeaguesInterface } from "../../interface/LeagueInterface";
 import Footer from "../../components/Footer";
 import Standings from "../../components/Standings";
 import axios from "axios";
+import Load from "../../components/Load";
 
 export default function TournamentStandings ():JSX.Element{
     const location = useLocation(); 
@@ -101,7 +102,7 @@ export default function TournamentStandings ():JSX.Element{
                         {standingsData ? (
                             <Standings data={standingsData[0]?.tournamentStandings} />
                         ) : (
-                            <p>Loading data...</p>
+                            <Load/>
                         )}
                                 
                         </div>
@@ -120,10 +121,11 @@ export default function TournamentStandings ():JSX.Element{
                         </div>
                        
                         <div className="standingsWindow">
-                                        
-                                        <Standings/>
+                            <Load/>
+                                        {/* <Standings/>  */}
+               
                                     
-                                </div>
+                        </div>
                    </div>
                 </div>
             </div>

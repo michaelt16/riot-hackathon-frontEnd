@@ -138,8 +138,8 @@
     height:62vh;
     background-color: #161123;
     border-radius: 20px;
-    overflow: scroll;
-    overflow-x: hidden;
+    /* overflow: scroll;
+    overflow-x: hidden; */
      /* This will change the width of the scrollbar */
     &::-webkit-scrollbar {
         width: 10px;
