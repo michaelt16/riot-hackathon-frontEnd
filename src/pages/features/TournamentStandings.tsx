@@ -13,47 +13,97 @@ export default function TournamentStandings ():JSX.Element{
     const navigate = useNavigate();
     
     const league: LeaguesInterface = location.state.league;
-    const [tournamentData, setTournamentData] = useState(league.tournaments);
+    const [tournamentData, setTournamentData] = useState();
     const [standingsData,setStandingsData] = useState()
     const [toggleSplit,setToggleSplit]= useState("Spring")
     const [dropDown,setDropdownToggle]= useState(false)
     const [year,setYear]= useState(2023)
+    const [tournamentIndex,setTournamentIndex] = useState<number>(0)
     const models = ["Bayesian Model", "Linear Regression", "Random Forest"]
     
-    console.log(tournamentData[0]?.id)
+  
+    // i gotta fetch the leagueTournaments
+
     useEffect(()=>{
-        //populate the different standings here
-        // tournament data is bugged, get rid of all the tournament data that dont map to anything
-        let apiLink = `http://matthewproject.click/tournamentStandings/${tournamentData[1]?.id}`
+        let apiLink = `http://matthewproject.click/leagueTournaments/${league.leagues_id}`
+
         try{
             axios.get(apiLink)
             .then(response=>{
-                setStandingsData(response.data)
+                setTournamentData(response.data)
             })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-              });
+        }catch(error){
+            console.error('Error fetching data:', error);
         }
-        catch(e){
-            console.log(e)
-        }
-    },[year])
+    },[])
+    // console.log("tournamentDataFrom leagueTournaments endpoint:", tournamentData?.tournaments)
+    // console.log("TTT",tournamentData?.tournaments[0].id)
+    useEffect(()=>{
+       
+        console.log("asersdfsdf", tournamentData)
+        if(tournamentData!= undefined){
+                const tournamentId = tournamentData?.tournaments[tournamentIndex].id
+                console.log("Test",tournamentId)
+
+                let apiLink = `http://matthewproject.click/tournamentStandings/${tournamentId}`
+                try{
+                    axios.get(apiLink)
+                    .then(response=>{
+                        console.log("TESTsssssssss",response.data)
+                        setStandingsData(response.data)
+                    })
+                    .catch(error => {
+                        console.error('Error fetching data:', error);
+                      });
+                }
+                catch(e){
+                    console.log(e)
+                }
+            }
+    },[tournamentIndex])
+           
+        
+      
+        
+   
     const handleClick = ()=>{
         navigate("/tournamentRanks")
     }
-    const handleLeftArrowYear = ()=>{
-        setYear(year > 2019 ? year - 1 : year);
-    }
-    const handleRightArrowYear = ()=>{
-        setYear(year < 2023 ? year + 1 : year);
-    }
-    
+    // const handleLeftArrowYear = ()=>{
+    //     setTournamentIndex(tournamentIndex-1)
+    // }
+    // const handleRightArrowYear = ()=>{
+    //     setTournamentIndex(tournamentIndex-1)
+    // }
+    // const fetchTournamentStandings = () =>{
+    //     console.log("Testststestsetst")
+    //     let apiLink = `http://matthewproject.click/tournamentStandings/${tournamentData?.tournaments[tournamentIndex].id}`
+    //     try{
+    //         axios.get(apiLink)
+    //         .then(response=>{
+            
+    //             setStandingsData(response.data)
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //           });
+    //     }
+    //     catch(e){
+    //         console.log(e)
+    //     }
+    // }
     const handleLeftArrowSplit = () =>{
-        setToggleSplit("Spring")
+        
+        setTournamentIndex(tournamentIndex!= 0 ? tournamentIndex-1: tournamentIndex)
+        
     }
     const handleRightArrowSplit = () =>{
-        setToggleSplit("Summer")
+        setTournamentIndex(tournamentIndex!= tournamentData?.length-1 ? tournamentIndex+1: tournamentIndex)
+        
     }
+    
+ 
+   
     const dropDownClick = ()=>{
         setDropdownToggle(!dropDown)
     }
@@ -64,7 +114,12 @@ export default function TournamentStandings ():JSX.Element{
             .split(' ')
             .map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : str; 
     }
-    // console.log("check",standingsData[0]?.tournamentStandings)
+
+    const handleFormatTournamentName = (index)=>{
+        return tournamentData?.tournaments[index].name
+    }
+    
+   
     return(
         <div className="tournamentStandingContainer">
             <Navbar/>
@@ -77,14 +132,13 @@ export default function TournamentStandings ():JSX.Element{
                         <h3 className="regionTitle centerText">{formatRegion(league?.region)}</h3>
                         <div className="splitContainer centerText">
                                 <h3 onClick={handleLeftArrowSplit} className="arrow">&lt;</h3>
-                                <h3>{toggleSplit}</h3>
+                            
+                                {tournamentData? (
+                                     <h3>{handleFormatTournamentName(tournamentIndex)}</h3>
+                                ):(
+                                     <h3>{}</h3>
+                                )}
                                 <h3 onClick={handleRightArrowSplit} className="arrow">&gt;</h3>
-                        </div>
-
-                        <div className="yearContainer centerText">
-                                <h3 onClick={handleLeftArrowYear} className="arrow">&lt;</h3>
-                                <h3>{year}</h3>
-                                <h3 onClick={handleRightArrowYear} className="arrow">&gt;</h3>
                         </div>
                         </div>
                     </div>
@@ -100,7 +154,7 @@ export default function TournamentStandings ():JSX.Element{
                         </div>
                         <div className="standingsWindow">
                         {standingsData ? (
-                            <Standings data={standingsData[0]?.tournamentStandings} />
+                            <Standings data= {standingsData[0].tournamentStandings}/>
                         ) : (
                             <Load/>
                         )}
@@ -121,7 +175,7 @@ export default function TournamentStandings ():JSX.Element{
                         </div>
                        
                         <div className="standingsWindow">
-                            <Load/>
+                                <Load/>
                                         {/* <Standings/>  */}
                
                                     

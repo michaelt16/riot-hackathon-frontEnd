@@ -12,11 +12,17 @@ export default function TournamentRankings(){
     
     const navigate = useNavigate()
     useEffect(() => {
-        axios.get("http://matthewproject.click/leagues")
-        .then(response=>{
-            console.log(response.data)
-            setLeaguesArr(response.data)
-        })
+        try{
+            axios.get("http://matthewproject.click/leagues")
+            .then(response=>{
+                // console.log(response.data)
+                setLeaguesArr(response.data)
+            })
+        }
+        catch(e){
+            console.log("leaguesErr:",e)
+        }
+       
     }, []);
     
     const handleClick = (league: LeaguesInterface)=>{
