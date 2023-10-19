@@ -49,7 +49,7 @@ export default function TournamentStandings ():JSX.Element{
                 try{
                     axios.get(apiLink)
                     .then(response=>{
-                        console.log("TESTsssssssss",response.data)
+                       
                         setStandingsData(response.data)
                        
                         
