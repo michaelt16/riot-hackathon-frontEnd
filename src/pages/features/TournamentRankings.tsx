@@ -15,7 +15,7 @@ export default function TournamentRankings(){
         try{
             axios.get("http://matthewproject.click/leagues")
             .then(response=>{
-                // console.log(response.data)
+                console.log(response.data)
                 setLeaguesArr(response.data)
             })
         }

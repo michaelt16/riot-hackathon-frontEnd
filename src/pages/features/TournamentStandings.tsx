@@ -15,10 +15,9 @@ export default function TournamentStandings ():JSX.Element{
     const league: LeaguesInterface = location.state.league;
     const [tournamentData, setTournamentData] = useState();
     const [standingsData,setStandingsData] = useState()
-    const [toggleSplit,setToggleSplit]= useState("Spring")
     const [dropDown,setDropdownToggle]= useState(false)
-    const [year,setYear]= useState(2023)
     const [tournamentIndex,setTournamentIndex] = useState<number>(0)
+    const [fetchState, setFetchState] = useState(false)
     const models = ["Bayesian Model", "Linear Regression", "Random Forest"]
     
   
@@ -38,9 +37,10 @@ export default function TournamentStandings ():JSX.Element{
     },[])
     // console.log("tournamentDataFrom leagueTournaments endpoint:", tournamentData?.tournaments)
     // console.log("TTT",tournamentData?.tournaments[0].id)
+    
     useEffect(()=>{
        
-        console.log("asersdfsdf", tournamentData)
+        console.log("asersdfsdf", tournamentData, fetchState)
         if(tournamentData!= undefined){
                 const tournamentId = tournamentData?.tournaments[tournamentIndex].id
                 console.log("Test",tournamentId)
@@ -51,6 +51,8 @@ export default function TournamentStandings ():JSX.Element{
                     .then(response=>{
                         console.log("TESTsssssssss",response.data)
                         setStandingsData(response.data)
+                       
+                        
                     })
                     .catch(error => {
                         console.error('Error fetching data:', error);
@@ -62,7 +64,7 @@ export default function TournamentStandings ():JSX.Element{
             }
     },[tournamentIndex])
            
-        
+   
       
         
    
@@ -93,11 +95,12 @@ export default function TournamentStandings ():JSX.Element{
     //     }
     // }
     const handleLeftArrowSplit = () =>{
-        
+        setStandingsData(undefined)
         setTournamentIndex(tournamentIndex!= 0 ? tournamentIndex-1: tournamentIndex)
         
     }
     const handleRightArrowSplit = () =>{
+        setStandingsData(undefined)
         setTournamentIndex(tournamentIndex!= tournamentData?.length-1 ? tournamentIndex+1: tournamentIndex)
         
     }
