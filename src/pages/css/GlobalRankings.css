@@ -1,10 +1,22 @@
 .globalRankingsPage{
-    height: 100vh;
+    height: auto;
     background-color: #D9D9D9 ;
 
 }
 
 .globalRankingsStandingsContainer{
     width:150vh;
-    margin-left: 230px;
+    margin-left: 255px;
+    background-color: #161123;
+    height:90vh;
+}
+
+.centerLoader{
+    padding-top:180px;
+}
+
+.globalStandingsHeader{
+    height:100px;
+    width: auto;
+    background-color: #161123;
 }

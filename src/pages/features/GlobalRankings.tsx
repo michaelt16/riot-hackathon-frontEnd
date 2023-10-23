@@ -4,11 +4,14 @@ import Footer from "../../components/Footer";
 import "../css/GlobalRankings.css"
 import { useNavigate } from "react-router-dom";
 import Standings from "../../components/Standings";
+import Load from "../../components/Load";
 export default function GlobalRankings(){
     const navigate = useNavigate()
     const handleReturn = ()=>{
         navigate("/home")
     }
+    const mockData ="s"
+    
     return(
         <div className="globalRankingsPage">
              <Navbar/>
@@ -24,7 +27,23 @@ export default function GlobalRankings(){
             </div>
             <div className="globalRankingsStandingsContainer">
                 
-                <Standings/>
+                {mockData?(
+                    <div>
+                        <div className="globalStandingsHeader">
+                            <p>TEST</p>
+                            </div>
+                        <Standings/>
+                    </div>
+
+                ):(
+                    <div className="centerLoader">
+
+                    <Load/>
+
+                    </div>
+                    
+                )}
+                
             </div>
             <Footer/>
         </div>
