@@ -117,17 +117,21 @@
     justify-content: center;
     font-family: "Montserrat";
     font-size: 12px;
+   
 }
 .orderButton:hover{
     cursor: pointer;
     
+}
+.dropDownLocation{
+    margin-left: 470px;
+  
 }
 
 .orderHeader{
     width: 90vh;
     height:5vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     border-bottom:solid 1px #262a2e;
 }

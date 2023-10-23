@@ -27,7 +27,7 @@ export default function Standings(props){
         return `${teamRecord.wins}W - ${teamRecord.losses}L`
       }
 
-      console.log("TESTSTETS",standingsData)
+     
     return(
         <div >
           <div className="handleOverflow">
@@ -42,16 +42,13 @@ export default function Standings(props){
                             <img className ="teamLogo"/>
                             <div className="teamFormatted">
                               <h3 className="teamFontSize">
-                              {teamInfo.name !== undefined ? teamInfo.name :''}
+                               {teamInfo.name !== undefined ? teamInfo.name :''}
                               </h3>
                               <h3 className="winrateFontSize">
                                 {teamRecord !== undefined ? formatWinLose(teamRecord):''}
                               </h3>
                             </div>
-                            
                           </div>
-                       
-                          
                       </div>
                   )
             })

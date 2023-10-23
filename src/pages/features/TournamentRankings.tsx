@@ -2,32 +2,37 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import "../css/TournamentRankings.css"
 import Footer from "../../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LeaguesInterface } from '../../interface/LeagueInterface';
 import axios from "axios";
 import Load from "../../components/Load";
-  //will use context later.
+import { useLeagues } from "../../context/LeaguesProvider";
+  
 export default function TournamentRankings(){
-    const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
-    
+    const location = useLocation(); 
+    // const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
+    const leaguesArr = useLeagues();
+    const [tournamentData, setTournamentData] = useState();
     const navigate = useNavigate()
-    useEffect(() => {
-        try{
-            axios.get("http://matthewproject.click/leagues")
-            .then(response=>{
-                console.log(response.data)
-                setLeaguesArr(response.data)
-            })
-        }
-        catch(e){
-            console.log("leaguesErr:",e)
-        }
-       
-    }, []);
+    interface League {
+  leagues_id: number;
+  image: string;
+  region: string;
+  name: string;
+  // Add any other properties present in the 'league' objects
+}
     
-    const handleClick = (league: LeaguesInterface)=>{
-        
-        navigate("/tournamentStandings",{ state: { league } })
+    const handleClick = async (league: LeaguesInterface)=>{
+        try {
+            const tournamentResponse = await axios.get(`http://api.lolpowerrankings.click/leagueTournaments/${league.leagues_id}`);
+            console.log("tourData", tournamentResponse.data);
+            const tournamentData = tournamentResponse.data
+            navigate("/tournamentStandings",{ state: { league:league,tournamentData: tournamentData } })
+            
+            setTournamentData(tournamentResponse.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     }
 
     const handleReturn=()=>{
@@ -58,7 +63,7 @@ export default function TournamentRankings(){
             ) : (
                 // Display the region cards when leaguesArr is not empty
                 <div className="regionContainer">
-                {leaguesArr.map((league) => {
+                {leaguesArr.map((league: LeaguesInterface) => {
                     return (
                     <div className="regionCard" key={league.leagues_id} onClick={() => handleClick(league)}>
                         <img className="regionCardIcons" src={league?.image} />

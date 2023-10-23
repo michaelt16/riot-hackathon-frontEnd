@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import "../css/GlobalRankings.css"
 import { useNavigate } from "react-router-dom";
+import Standings from "../../components/Standings";
 export default function GlobalRankings(){
     const navigate = useNavigate()
     const handleReturn = ()=>{
@@ -19,7 +20,13 @@ export default function GlobalRankings(){
                 
                 <h1>Global Rankings</h1>
              </div>
+
             </div>
+            <div className="globalRankingsStandingsContainer">
+                
+                <Standings/>
+            </div>
+            <Footer/>
         </div>
     )
 }

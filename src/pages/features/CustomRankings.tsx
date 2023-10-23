@@ -6,26 +6,34 @@ import { LeaguesInterface } from '../../interface/LeagueInterface';
 import Standings from "../../components/Standings";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLeagues } from "../../context/LeaguesProvider";
+interface Model{
 
+  name:string,
+  id:string
+}
 
 export default function CustomRankings() {
   const navigate = useNavigate()
   const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
+  const [dropDown,setDropdownToggle]= useState(false)
+  const [modelStandingsData, setModelStandingsData] = useState()
   // team array from the fetched data
   const [teamArr, setTeamArr] = useState([])
+  const [modelName,setModelName]= useState("Select a Model")
+    const models:Model[] = [{name:"Bayesian Model",id:"bayesian"}, {name:"Logistic Regression",id:"logisticregression"}, {name:"Random Forest",id:"randomforest"}]
   // add into team arr
   const [orderTeamArr,setOrderTeamArr]=useState<object>([])
+  const leagues = useLeagues();
   useEffect(() => {
-      axios.get("http://matthewproject.click/leagues")
-      .then(response=>{
-          const leaguesData = response.data
-          const filterInternational: LeaguesInterface[] = leaguesData.filter((league:LeaguesInterface)=>league.region !== "INTERNATIONAL")
+      
+          const filterInternational: LeaguesInterface[] = leagues.filter((league:LeaguesInterface)=>league.region !== "INTERNATIONAL")
             .map((filteredLeague: LeaguesInterface)=>({
               ...filteredLeague,
               isExpanded: false
             }))
           setLeaguesArr(filterInternational)
-      })
+     
   }, []);
 
 
@@ -43,10 +51,8 @@ export default function CustomRankings() {
   };
 
   const handleFolderPopulation= (league_id:number)=>{
-      //fetch thing
-      //instead of this
-      // endpoint bugged need to get rid of teams that dont exist
-     axios.get(`http://matthewproject.click/leagueTeams/${league_id}`)
+  
+     axios.get(`http://api.lolpowerrankings.click/leagueTeams/${league_id}`)
      .then((response)=>{
         const data = response.data
         setTeamArr(data)
@@ -85,6 +91,35 @@ export default function CustomRankings() {
   const handleReturn=()=>{
     navigate("/home")
 }
+const fetchModel= (model:Model)=>{
+  const apiURL = "http://api.lolpowerrankings.click"
+  const apiLink = `${apiURL}/model/tournamentsStandings/`;
+  setModelName(model.name)
+  const params = {
+      model: model.id,
+      stage: "test", 
+    };
+    axios.get(apiLink, { params })
+      .then(response => {
+       console.log(response.data);
+       setModelStandingsData(response.data)  
+      })
+      .catch(error => {
+      console.error("Axios request error:", error);
+
+});
+  
+}
+ 
+   
+const dropDownClick = (e)=>{
+     
+  console.log("dropdownclicked")
+  setDropdownToggle(!dropDown)
+  
+}
+
+
   console.log(orderTeamArr)
   return (
     <div className="customRankingsContainer">
@@ -131,11 +166,36 @@ export default function CustomRankings() {
               <div className="orderButton" onClick={handleRankTeamsButton}>
                   <h1>Rank Teams</h1>
               </div>
+              <div className="dropDownLocation">
+              <div className="dropdownContainer"  onClick={(e)=> dropDownClick(e)}>
+                                
+                                <div className="dropdownBox"> Model: {modelName}</div>
+                                {
+                                    dropDown?(
+                                        <div className="dropdownExpandedContainer">
+
+                                            {models.map((model)=>{
+                                                return(
+                                                    <div className="dropDownExpandedBox" onClick={()=>fetchModel(model)}>
+                                                        {model.name}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    ):
+                                    (
+                                        <div></div>
+                                    )
+                                }
+                            
+                            </div>
+                            </div>
             </div>
 
             <div className="orderMainContainer">
               {/* populate the rank orders */}
               {/* its gonna be in a form of an array and everytime i click it adds into the prop array */}
+              {/* if null load the loader */}
               <Standings data={orderTeamArr}/>
             </div>
         </div>
