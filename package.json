@@ -41,8 +41,8 @@
     ]
   },
   "devDependencies": {
-    "typescript": "5.2.2",
     "@types/file-saver": "^2.0.5",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.16.0",
+    "typescript": "5.2.2"
   }
 }
