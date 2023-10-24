@@ -7,6 +7,8 @@ import Standings from "../../components/Standings";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLeagues } from "../../context/LeaguesProvider";
+import Load from "../../components/Load";
+import ModelStandings from "../../components/ModelStandings";
 interface Model{
 
   name:string,
@@ -18,12 +20,14 @@ export default function CustomRankings() {
   const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
   const [dropDown,setDropdownToggle]= useState(false)
   const [modelStandingsData, setModelStandingsData] = useState()
+  const [modelData,setModelData]=useState<Model>()
   // team array from the fetched data
   const [teamArr, setTeamArr] = useState([])
   const [modelName,setModelName]= useState("Select a Model")
     const models:Model[] = [{name:"Bayesian Model",id:"bayesian"}, {name:"Logistic Regression",id:"logisticregression"}, {name:"Random Forest",id:"randomforest"}]
   // add into team arr
   const [orderTeamArr,setOrderTeamArr]=useState<object>([])
+  const apiURL = "http://api.lolpowerrankings.click"
   const leagues = useLeagues();
   useEffect(() => {
       
@@ -77,38 +81,36 @@ export default function CustomRankings() {
   }
 
   const handleRankTeamsButton=()=>{
-    //fetch from the model endpoint and store into orderTeamArr and it will update the standings prop
-    console.log("rerank")
-    const clonedArr = [...orderTeamArr];
-
-    for (let i = clonedArr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [clonedArr[i], clonedArr[j]] = [clonedArr[j], clonedArr[i]];
+    
+    const apiLink = `${apiURL}/team_rankings`;
+    const idArray = orderTeamArr.map(item => item.id);
+    console.log(idArray)
+    if(modelData!= undefined){
+      const teamIdsParam = `[${idArray.join(',')}]`;
+      const params = {
+        model:modelData.id,
+        team_ids:teamIdsParam
+      }
+      console.log(params)
+      axios.get(apiLink,{params})
+      .then(response=>{
+        console.log("MODEL RESP",response.data);
+        setModelStandingsData(response.data)  
+      })
+      
+    }else{
+      console.log("pick a model first")
     }
-    setOrderTeamArr(clonedArr)
+    
+    
   
   }
   const handleReturn=()=>{
     navigate("/home")
 }
-const fetchModel= (model:Model)=>{
-  const apiURL = "http://api.lolpowerrankings.click"
-  const apiLink = `${apiURL}/model/tournamentsStandings/`;
+const toggleModel= (model:Model)=>{
   setModelName(model.name)
-  const params = {
-      model: model.id,
-      stage: "test", 
-    };
-    axios.get(apiLink, { params })
-      .then(response => {
-       console.log(response.data);
-       setModelStandingsData(response.data)  
-      })
-      .catch(error => {
-      console.error("Axios request error:", error);
-
-});
-  
+  setModelData(model)
 }
  
    
@@ -120,7 +122,7 @@ const dropDownClick = (e)=>{
 }
 
 
-  console.log(orderTeamArr)
+  // console.log(orderTeamArr)
   return (
     <div className="customRankingsContainer">
       <Navbar />
@@ -176,7 +178,7 @@ const dropDownClick = (e)=>{
 
                                             {models.map((model)=>{
                                                 return(
-                                                    <div className="dropDownExpandedBox" onClick={()=>fetchModel(model)}>
+                                                    <div className="dropDownExpandedBox" onClick={()=>toggleModel(model)}>
                                                         {model.name}
                                                     </div>
                                                 )
@@ -193,10 +195,17 @@ const dropDownClick = (e)=>{
             </div>
 
             <div className="orderMainContainer">
-              {/* populate the rank orders */}
-              {/* its gonna be in a form of an array and everytime i click it adds into the prop array */}
-              {/* if null load the loader */}
-              <Standings data={orderTeamArr}/>
+            {modelStandingsData ? (
+                <ModelStandings data={modelStandingsData} />
+              ) : orderTeamArr.length !== 0 ? (
+                <Standings data={orderTeamArr} />
+              ) : (
+                <Load />
+              )}
+
+              
+            
+              
             </div>
         </div>
       </div>

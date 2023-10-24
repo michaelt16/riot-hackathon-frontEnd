@@ -7,6 +7,7 @@ import Footer from "../../components/Footer";
 import Standings from "../../components/Standings";
 import axios from "axios";
 import Load from "../../components/Load";
+import ModelStandings from "../../components/ModelStandings";
 interface Model{
 
     name:string,
@@ -48,6 +49,7 @@ export default function TournamentStandings ():JSX.Element{
   
     useEffect(()=>{
         setModelName("Select a Model")
+        setModelStandingsData(undefined)
     },[tournamentIndex])
     const handleClick = ()=>{
         navigate("/tournamentRanks")
@@ -78,9 +80,7 @@ export default function TournamentStandings ():JSX.Element{
     };
     
     const handleRightArrowSplit = () => {
-       
         setTournamentIndex((prevIndex) => (prevIndex < tournamentData?.tournaments.length - 1 ? prevIndex + 1 : prevIndex));
-       
         fetchStandingsData(tournamentIndex + 1);
     };
  
@@ -106,14 +106,15 @@ export default function TournamentStandings ():JSX.Element{
     const fetchModel= (model:Model)=>{
         const tournamentId = tournamentData.tournaments[tournamentIndex].id;
         const apiLink = `${apiURL}/model/tournamentsStandings/${tournamentId}`;
+        setModelStandingsData(undefined)
         setModelName(model.name)
         const params = {
             model: model.id,
-            stage: "test", 
+            stage: "Regular Season", 
           };
           axios.get(apiLink, { params })
             .then(response => {
-             console.log(response.data);
+             console.log("MODEL",response.data);
              setModelStandingsData(response.data)  
             })
             .catch(error => {
@@ -122,6 +123,10 @@ export default function TournamentStandings ():JSX.Element{
     });
         
     }
+
+    if (modelStandingsData !== null) {
+        console.log("tournamentStaings",modelStandingsData);
+      }
 
    
     return(
@@ -183,8 +188,16 @@ export default function TournamentStandings ():JSX.Element{
                             </div>
                         
                             <div className="standingsWindow">
-                                    <Load/>
-                                        {/* <Standings/>  */}
+                                {
+                                    modelStandingsData?(
+                                        
+                                           <ModelStandings data = {modelStandingsData}/>  
+                                    ):(
+                                        <Load/>
+                                    )
+                                }
+                                   
+                                      
                
                                     
                         </div>

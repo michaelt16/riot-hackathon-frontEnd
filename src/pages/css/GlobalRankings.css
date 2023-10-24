@@ -9,6 +9,9 @@
     margin-left: 255px;
     background-color: #161123;
     height:90vh;
+    
+
+  
 }
 
 .centerLoader{
@@ -16,7 +19,38 @@
 }
 
 .globalStandingsHeader{
-    height:100px;
+    height:130px;
     width: auto;
     background-color: #161123;
+    
+}
+
+.topContainer{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    height:60px;
+}
+.numberContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50vh;
+}
+.numberBox{
+    width: 50px;
+    height:40px;
+    background-color: white;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+.numberBox:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.centerButton{
+    padding:120px;
 }

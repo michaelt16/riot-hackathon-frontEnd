@@ -14,7 +14,7 @@ export default function AppRouter(){
     const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
     useEffect(() => {
       try{
-          axios.get("http://matthewproject.click/leagues")
+          axios.get("http://api.lolpowerrankings.click/leagues")
           .then(response=>{
               console.log(response.data)
               setLeaguesArr(response.data)
