@@ -110,24 +110,29 @@
 .orderButton{
     width: 130px;
     height: 32px;
-    background-color: #D9D9D9;
+    background-color: white;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: "Montserrat";
     font-size: 12px;
+   
 }
 .orderButton:hover{
     cursor: pointer;
+    transform: scale(1.1);
     
+}
+.dropDownLocation{
+    margin-left: 470px;
+  
 }
 
 .orderHeader{
     width: 90vh;
     height:5vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     border-bottom:solid 1px #262a2e;
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Navbar from "../components/Navbar"
 import "../pages/css/Home.css"
 import leaguesLogo from "../assets/leaguesLogo.png"
@@ -7,11 +7,14 @@ import takeoverLogo from "../assets/takeoverLogo.png"
 
 import { useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
+import axios from "axios"
+import { LeaguesInterface } from "../interface/LeagueInterface"
+import { useLeagues } from "../context/LeaguesProvider"
 
 export default function Home(): JSX.Element {
+  
+    const navigate = useNavigate()
 
-    
-   const navigate = useNavigate()
     const tournamentRankingsClick=()=>{
       navigate("/tournamentRanks")
     }

@@ -1,4 +1,54 @@
 .globalRankingsPage{
-    height: 100vh;
+    height: auto;
     background-color: #D9D9D9 ;
+
+}
+
+.globalRankingsStandingsContainer{
+    width:110vh;
+    margin-left: 435px;
+    background-color: #161123;
+    height:auto; 
+    margin-top: -30px;
+}
+
+.centerLoader{
+    padding-top:30px;
+}
+
+.globalStandingsHeader{
+    margin-top: 20px;
+    width: auto;
+    background-color: #161123;
+    height: auto;
+}
+
+.topContainer{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    height:60px;
+    border-bottom:solid 1px #262a2e;
+}
+.numberContainer{
+    display: flex;
+    width: 60vh;
+}
+.numberBox{
+    width: 50px;
+    height:40px;
+    background-color: white;
+    margin: 5px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+.numberBox:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.centerButton{
+    padding:120px;
 }

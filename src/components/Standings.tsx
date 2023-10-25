@@ -10,16 +10,21 @@ interface teamRecord{
 export default function Standings(props){
       // const standingsProp = props.standingsData?.[0].tournamentStandings
       const [standingsData,setStandingsData] =useState()
-      const imgLink = "http://127.0.0.1:5000/api/icon/"
-      const generateImage = (teamName: string)=>{
-        // gonna get it from db
-        return `${imgLink}${teamName}`
-      }
+      // const imgLink = "http://127.0.0.1:5000/api/icon/"
+      // const generateImage = (teamName: string)=>{
+      //   // gonna get it from db
+      //   return `${imgLink}${teamName}`
+      // }
      
       useEffect(() => {
-        
-        console.log("TEST",props.data);
         setStandingsData(props.data)
+        // console.log("TEST",props.data);
+        // if(props.data!== "no data"){
+         
+        // }else{
+        //   setStandingsData(undefined)
+        // }
+       
       }, [props]);
       
       const formatWinLose = (teamRecord: teamRecord)=>{
@@ -27,11 +32,11 @@ export default function Standings(props){
         return `${teamRecord.wins}W - ${teamRecord.losses}L`
       }
 
-      console.log("TESTSTETS",standingsData)
+     
     return(
         <div >
           <div className="handleOverflow">
-            {
+            {standingsData? (
               standingsData?.map((team,index:number)=>{
               const teamInfo = team.team_info
               const teamRecord = team.record
@@ -42,19 +47,18 @@ export default function Standings(props){
                             <img className ="teamLogo"/>
                             <div className="teamFormatted">
                               <h3 className="teamFontSize">
-                              {teamInfo.name !== undefined ? teamInfo.name :''}
+                               {teamInfo.name !== undefined ? teamInfo.name :''}
                               </h3>
                               <h3 className="winrateFontSize">
                                 {teamRecord !== undefined ? formatWinLose(teamRecord):''}
                               </h3>
                             </div>
-                            
                           </div>
-                       
-                          
                       </div>
                   )
-            })
+            })):(
+              <div></div>
+            )
             }
                 
                 </div>

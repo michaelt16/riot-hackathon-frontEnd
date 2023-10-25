@@ -6,26 +6,38 @@ import { LeaguesInterface } from '../../interface/LeagueInterface';
 import Standings from "../../components/Standings";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useLeagues } from "../../context/LeaguesProvider";
+import Load from "../../components/Load";
+import ModelStandings from "../../components/ModelStandings";
+interface Model{
 
+  name:string,
+  id:string
+}
 
 export default function CustomRankings() {
   const navigate = useNavigate()
   const [leaguesArr, setLeaguesArr] = useState<LeaguesInterface[]>([]);
+  const [dropDown,setDropdownToggle]= useState(false)
+  const [modelStandingsData, setModelStandingsData] = useState()
+  const [modelData,setModelData]=useState<Model>()
   // team array from the fetched data
   const [teamArr, setTeamArr] = useState([])
+  const [modelName,setModelName]= useState("Select a Model")
+    const models:Model[] = [{name:"Bayesian Model",id:"bayesian"}, {name:"Logistic Regression",id:"logisticregression"}, {name:"Random Forest",id:"randomforest"}]
   // add into team arr
   const [orderTeamArr,setOrderTeamArr]=useState<object>([])
+  const apiURL = "http://api.lolpowerrankings.click"
+  const leagues = useLeagues();
   useEffect(() => {
-      axios.get("http://matthewproject.click/leagues")
-      .then(response=>{
-          const leaguesData = response.data
-          const filterInternational: LeaguesInterface[] = leaguesData.filter((league:LeaguesInterface)=>league.region !== "INTERNATIONAL")
+      
+          const filterInternational: LeaguesInterface[] = leagues.filter((league:LeaguesInterface)=>league.region !== "INTERNATIONAL")
             .map((filteredLeague: LeaguesInterface)=>({
               ...filteredLeague,
               isExpanded: false
             }))
           setLeaguesArr(filterInternational)
-      })
+     
   }, []);
 
 
@@ -43,10 +55,8 @@ export default function CustomRankings() {
   };
 
   const handleFolderPopulation= (league_id:number)=>{
-      //fetch thing
-      //instead of this
-      // endpoint bugged need to get rid of teams that dont exist
-     axios.get(`http://matthewproject.click/leagueTeams/${league_id}`)
+  
+     axios.get(`http://api.lolpowerrankings.click/leagueTeams/${league_id}`)
      .then((response)=>{
         const data = response.data
         setTeamArr(data)
@@ -71,21 +81,48 @@ export default function CustomRankings() {
   }
 
   const handleRankTeamsButton=()=>{
-    //fetch from the model endpoint and store into orderTeamArr and it will update the standings prop
-    console.log("rerank")
-    const clonedArr = [...orderTeamArr];
-
-    for (let i = clonedArr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [clonedArr[i], clonedArr[j]] = [clonedArr[j], clonedArr[i]];
+    
+    const apiLink = `${apiURL}/team_rankings`;
+    const idArray = orderTeamArr.map(item => item.id);
+    console.log(idArray)
+    if(modelData!= undefined){
+      const teamIdsParam = `[${idArray.join(',')}]`;
+      const params = {
+        model:modelData.id,
+        team_ids:teamIdsParam
+      }
+      console.log(params)
+      axios.get(apiLink,{params})
+      .then(response=>{
+        console.log("MODEL RESP",response.data);
+        setModelStandingsData(response.data)  
+      })
+      
+    }else{
+      console.log("pick a model first")
     }
-    setOrderTeamArr(clonedArr)
+    
+    
   
   }
   const handleReturn=()=>{
     navigate("/home")
 }
-  console.log(orderTeamArr)
+const toggleModel= (model:Model)=>{
+  setModelName(model.name)
+  setModelData(model)
+}
+ 
+   
+const dropDownClick = (e)=>{
+     
+  console.log("dropdownclicked")
+  setDropdownToggle(!dropDown)
+  
+}
+
+
+  // console.log(orderTeamArr)
   return (
     <div className="customRankingsContainer">
       <Navbar />
@@ -131,12 +168,46 @@ export default function CustomRankings() {
               <div className="orderButton" onClick={handleRankTeamsButton}>
                   <h1>Rank Teams</h1>
               </div>
+              <div className="dropDownLocation">
+              <div className="dropdownContainer"  onClick={(e)=> dropDownClick(e)}>
+                                
+                                <div className="dropdownBox"> Model: {modelName}</div>
+                                {
+                                    dropDown?(
+                                        <div className="dropdownExpandedContainer">
+
+                                            {models.map((model)=>{
+                                                return(
+                                                    <div className="dropDownExpandedBox" onClick={()=>toggleModel(model)}>
+                                                        {model.name}
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    ):
+                                    (
+                                        <div></div>
+                                    )
+                                }
+                            
+                            </div>
+                            </div>
             </div>
 
             <div className="orderMainContainer">
-              {/* populate the rank orders */}
-              {/* its gonna be in a form of an array and everytime i click it adds into the prop array */}
-              <Standings data={orderTeamArr}/>
+            {modelStandingsData ? (
+                <ModelStandings data={modelStandingsData} />
+              ) : orderTeamArr.length !== 0 ? (
+                <Standings data={orderTeamArr} />
+              ) : (
+                <div className="centerLoader">
+                <Load />
+                </div>
+              )}
+
+              
+            
+              
             </div>
         </div>
       </div>
