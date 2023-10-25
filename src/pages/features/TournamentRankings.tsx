@@ -27,9 +27,12 @@ export default function TournamentRankings(){
             const tournamentResponse = await axios.get(`http://api.lolpowerrankings.click/leagueTournaments/${league.leagues_id}`);
             console.log("tourData", tournamentResponse.data);
             const tournamentData = tournamentResponse.data
+            console.log(league.name)
             if(league.name==="Worlds"){
                 
                 tournamentData.tournaments.unshift({id: '', name: 'Worlds 2023', startDate: ''})
+            }else if (league.name === "MSI"){
+                tournamentData.tournaments.unshift({id: '', name: 'MSI 2023', startDate: ''})
             }
             
             navigate("/tournamentStandings",{ state: { league:league,tournamentData: tournamentData } })

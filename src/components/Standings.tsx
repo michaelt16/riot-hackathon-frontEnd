@@ -10,16 +10,21 @@ interface teamRecord{
 export default function Standings(props){
       // const standingsProp = props.standingsData?.[0].tournamentStandings
       const [standingsData,setStandingsData] =useState()
-      const imgLink = "http://127.0.0.1:5000/api/icon/"
-      const generateImage = (teamName: string)=>{
-        // gonna get it from db
-        return `${imgLink}${teamName}`
-      }
+      // const imgLink = "http://127.0.0.1:5000/api/icon/"
+      // const generateImage = (teamName: string)=>{
+      //   // gonna get it from db
+      //   return `${imgLink}${teamName}`
+      // }
      
       useEffect(() => {
-        
-        console.log("TEST",props.data);
         setStandingsData(props.data)
+        // console.log("TEST",props.data);
+        // if(props.data!== "no data"){
+         
+        // }else{
+        //   setStandingsData(undefined)
+        // }
+       
       }, [props]);
       
       const formatWinLose = (teamRecord: teamRecord)=>{
@@ -31,7 +36,7 @@ export default function Standings(props){
     return(
         <div >
           <div className="handleOverflow">
-            {
+            {standingsData? (
               standingsData?.map((team,index:number)=>{
               const teamInfo = team.team_info
               const teamRecord = team.record
@@ -51,7 +56,9 @@ export default function Standings(props){
                           </div>
                       </div>
                   )
-            })
+            })):(
+              <div></div>
+            )
             }
                 
                 </div>

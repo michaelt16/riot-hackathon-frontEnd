@@ -14,9 +14,6 @@ interface Model{
     id:string
 }
 
-interface Tournament{
-
-}
 export default function TournamentStandings ():JSX.Element{
    
     const location = useLocation(); 
@@ -24,7 +21,7 @@ export default function TournamentStandings ():JSX.Element{
     
     const league: LeaguesInterface = location.state.league;
     const tournamentData: LeaguesInterface = location.state.tournamentData
-    // const [tournamentData, setTournamentData] = useState();
+  
     const [standingsData,setStandingsData] = useState()
     const [dropDown,setDropdownToggle]= useState(false)
     const [tournamentIndex,setTournamentIndex] = useState<number>(0)
@@ -32,11 +29,11 @@ export default function TournamentStandings ():JSX.Element{
     const [modelName,setModelName]= useState("Select a Model")
     const models:Model[] = [{name:"Bayesian Model",id:"bayesian"}, {name:"Logistic Regression",id:"logisticregression"}, {name:"Random Forest",id:"randomforest"}]
     const apiURL = "http://api.lolpowerrankings.click"
-    const [currentWorlds,setCurrentWorldsState]= useState(false)
+    
     const [stage,setStage]= useState("Regular Season")
     // const worlds2022Standings=["DRX","T1","JDG","GENG","ROUGUE","RNG","DWG KIA", "EDG"]
     // const worlds2021 =["EDG","DWG KIA","T1","GENG","HANWALIFE","RNG","RNG","MAD","C9"]
-    const worlds2023TeamIds = [
+     const worlds2023TeamIds = [
         "100205573495116443",
         "98767991853197861",
         "99566404579461230",
@@ -60,11 +57,24 @@ export default function TournamentStandings ():JSX.Element{
         "105397404796640412",
         "98767991935149427"
       ];
- 
+      const msi2023TeamIds = [
+        "99566404852189289",
+        "99566404853854212",
+        "98767991853197861",
+        "100205573495116443",
+        "98767991926151025",
+        "98767991877340524",
+        "103461966965149786",
+        "99294153824386385",
+        "104367068120825486",
+        "98767991935149427",
+        "105397404796640412",
+        "98767991954244555",
+        "100285330168091787"
+      ];
 
     useEffect(()=>{
-        
-        if (tournamentData.tournaments[0].id != "") {
+       
             
              const apiLink = `${apiURL}/tournamentStandings/${tournamentData.tournaments[0].id}`;
              axios.get(apiLink)
@@ -72,24 +82,25 @@ export default function TournamentStandings ():JSX.Element{
                  const data = response.data;
                  console.log("Data",data[0])
                  const tournamentName = data[0].tournamentName
-                 if(tournamentName=== "worlds_2022"|| tournamentName=="msi_2022"|| tournamentName=="msi_2021"){
-                     console.log("working")
-                     setStage("knockouts")
-                 }else if (tournamentName==="worlds_2021"){
-                     setStage("Playoffs")
-                 }else{
-                     setStandingsData(data)
-                 }
+                //  if(tournamentName=== "worlds_2022"|| tournamentName=="msi_2022"|| tournamentName=="msi_2021"){
+                //      console.log("working")
+                //      setStage("knockouts")
+                //  }else if (tournamentName==="worlds_2021"){
+                //      setStage("Playoffs")
+                //  }else{
+                //      setStandingsData(data)
+                     
+                //  }
                
-               
+                 setStandingsData(data) 
                  
              })
              .catch((error) => {
                  console.error('Error fetching standings data:', error);
              });
-          }
           
-    
+          
+
        
     } ,[])
   
@@ -119,7 +130,7 @@ export default function TournamentStandings ():JSX.Element{
                         }else{
                             setStandingsData(data)
                         }
-                    // setStandingsData(data);
+                  
                 
                 })
                 .catch((error) => {
@@ -165,9 +176,7 @@ export default function TournamentStandings ():JSX.Element{
         if (tournamentData.tournaments[tournamentIndex].id != "") {
         const tournamentId = tournamentData.tournaments[tournamentIndex].id;
         const apiLink = `${apiURL}/model/tournamentsStandings/${tournamentId}`;
-        
-        
-        
+
         const params = {
             model: model.id,
             stage: stage, 
@@ -181,17 +190,21 @@ export default function TournamentStandings ():JSX.Element{
             console.error("Axios request error:", error);
 
             });
-
-                     
-        
     }else{
             const apiLink = `${apiURL}/team_rankings`;
             console.log(worlds2023TeamIds)
-            const teamIdsParam = `[${worlds2023TeamIds.join(',')}]`;
+            let teamIdsParam 
+            console.log(tournamentData.tournaments[tournamentIndex].name)
+            if(tournamentData.tournaments[tournamentIndex].name ==="MSI 2023"){
+                teamIdsParam = `[${msi2023TeamIds.join(',')}]`;
+            }else{
+                teamIdsParam = `[${worlds2023TeamIds.join(',')}]`;
+            }
+            
             const params = {
                 model:model.id,
                 team_ids:teamIdsParam
-              }
+            }
               axios.get(apiLink,{params})
                 .then(response=>{
                     console.log("MODEL RESP",response.data);
@@ -201,29 +214,6 @@ export default function TournamentStandings ():JSX.Element{
 
 }
 
-   
-    
-//   const handleRankTeamsButton=()=>{
-    
-//     const apiLink = `${apiURL}/team_rankings`;
-
-//     if(modelData!= undefined){
-//       const teamIdsParam = `[${idArray.join(',')}]`;
-//       const params = {
-//         model:modelData.id,
-//         team_ids:teamIdsParam
-//       }
-//       console.log(params)
-//       axios.get(apiLink,{params})
-//       .then(response=>{
-//         console.log("MODEL RESP",response.data);
-//         setModelStandingsData(response.data)  
-//       })
-      
-//     }else{
-//       console.log("pick a model first")
-//     }  
-   
     return(
         <div className="tournamentStandingContainer">
             <Navbar/>
