@@ -27,8 +27,14 @@ export default function TournamentRankings(){
             const tournamentResponse = await axios.get(`http://api.lolpowerrankings.click/leagueTournaments/${league.leagues_id}`);
             console.log("tourData", tournamentResponse.data);
             const tournamentData = tournamentResponse.data
-            navigate("/tournamentStandings",{ state: { league:league,tournamentData: tournamentData } })
+            if(league.name==="Worlds"){
+                
+                tournamentData.tournaments.unshift({id: '', name: 'Worlds 2023', startDate: ''})
+            }
             
+            navigate("/tournamentStandings",{ state: { league:league,tournamentData: tournamentData } })
+           
+            console.log("ZZZZZZZZZZZZZZZZZZZZ",league.name, tournamentData)
             setTournamentData(tournamentResponse.data);
         } catch (error) {
             console.error('Error fetching data:', error);

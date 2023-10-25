@@ -32,19 +32,65 @@ export default function TournamentStandings ():JSX.Element{
     const [modelName,setModelName]= useState("Select a Model")
     const models:Model[] = [{name:"Bayesian Model",id:"bayesian"}, {name:"Logistic Regression",id:"logisticregression"}, {name:"Random Forest",id:"randomforest"}]
     const apiURL = "http://api.lolpowerrankings.click"
+    const [currentWorlds,setCurrentWorldsState]= useState(false)
+    const [stage,setStage]= useState("Regular Season")
+    // const worlds2022Standings=["DRX","T1","JDG","GENG","ROUGUE","RNG","DWG KIA", "EDG"]
+    // const worlds2021 =["EDG","DWG KIA","T1","GENG","HANWALIFE","RNG","RNG","MAD","C9"]
+    const worlds2023TeamIds = [
+        "100205573495116443",
+        "98767991853197861",
+        "99566404579461230",
+        "100725845018863243",
+        "99566404852189289",
+        "99566404853854212",
+        "99566404850008779",
+        "99566404853058754",
+        "98767991926151025",
+        "98767991866488695",
+        "103461966965149786",
+        "106972778172351142",
+        "98767991877340524",
+        "98926509885559666",
+        "107563714667537640",
+        "104367068120825486",
+        "107700199633958891",
+        "98767991954244555",
+        "108573042084687884",
+        "100285330168091787",
+        "105397404796640412",
+        "98767991935149427"
+      ];
+ 
+
     useEffect(()=>{
-        const apiLink = `${apiURL}/tournamentStandings/${tournamentData.tournaments[0].id}`;
-    
-        axios.get(apiLink)
-            .then((response) => {
-                const data = response.data;
-                console.log(data)
-                setStandingsData(data);
+        
+        if (tournamentData.tournaments[0].id != "") {
             
-            })
-            .catch((error) => {
-                console.error('Error fetching standings data:', error);
-            });
+             const apiLink = `${apiURL}/tournamentStandings/${tournamentData.tournaments[0].id}`;
+             axios.get(apiLink)
+             .then((response) => {
+                 const data = response.data;
+                 console.log("Data",data[0])
+                 const tournamentName = data[0].tournamentName
+                 if(tournamentName=== "worlds_2022"|| tournamentName=="msi_2022"|| tournamentName=="msi_2021"){
+                     console.log("working")
+                     setStage("knockouts")
+                 }else if (tournamentName==="worlds_2021"){
+                     setStage("Playoffs")
+                 }else{
+                     setStandingsData(data)
+                 }
+               
+               
+                 
+             })
+             .catch((error) => {
+                 console.error('Error fetching standings data:', error);
+             });
+          }
+          
+    
+       
     } ,[])
   
     useEffect(()=>{
@@ -57,13 +103,23 @@ export default function TournamentStandings ():JSX.Element{
 
     const fetchStandingsData = (tournamentIndex:number) => {
         if (tournamentData && tournamentIndex >= 0 && tournamentIndex < tournamentData.tournaments.length) {
+
             const tournamentId = tournamentData.tournaments[tournamentIndex].id;
             const apiLink = `${apiURL}/tournamentStandings/${tournamentId}`;
             setStandingsData(undefined)
             axios.get(apiLink)
                 .then((response) => {
                     const data = response.data;
-                    setStandingsData(data);
+                    const tournamentName = data[0].tournamentName
+                     if(tournamentName=== "worlds_2022"|| tournamentName=="msi_2022"){
+                    console.log("working")
+                    setStage("knockouts")
+                        }else if (tournamentName==="worlds_2021"){
+                            setStage("Playoffs")
+                        }else{
+                            setStandingsData(data)
+                        }
+                    // setStandingsData(data);
                 
                 })
                 .catch((error) => {
@@ -104,13 +160,17 @@ export default function TournamentStandings ():JSX.Element{
     }
 
     const fetchModel= (model:Model)=>{
-        const tournamentId = tournamentData.tournaments[tournamentIndex].id;
-        const apiLink = `${apiURL}/model/tournamentsStandings/${tournamentId}`;
         setModelStandingsData(undefined)
         setModelName(model.name)
+        if (tournamentData.tournaments[tournamentIndex].id != "") {
+        const tournamentId = tournamentData.tournaments[tournamentIndex].id;
+        const apiLink = `${apiURL}/model/tournamentsStandings/${tournamentId}`;
+        
+        
+        
         const params = {
             model: model.id,
-            stage: "Regular Season", 
+            stage: stage, 
           };
           axios.get(apiLink, { params })
             .then(response => {
@@ -119,15 +179,50 @@ export default function TournamentStandings ():JSX.Element{
             })
             .catch(error => {
             console.error("Axios request error:", error);
-      
-    });
+
+            });
+
+                     
         
+    }else{
+            const apiLink = `${apiURL}/team_rankings`;
+            console.log(worlds2023TeamIds)
+            const teamIdsParam = `[${worlds2023TeamIds.join(',')}]`;
+            const params = {
+                model:model.id,
+                team_ids:teamIdsParam
+              }
+              axios.get(apiLink,{params})
+                .then(response=>{
+                    console.log("MODEL RESP",response.data);
+                    setModelStandingsData(response.data)  
+      }) 
     }
 
-    if (modelStandingsData !== null) {
-        console.log("tournamentStaings",modelStandingsData);
-      }
+}
 
+   
+    
+//   const handleRankTeamsButton=()=>{
+    
+//     const apiLink = `${apiURL}/team_rankings`;
+
+//     if(modelData!= undefined){
+//       const teamIdsParam = `[${idArray.join(',')}]`;
+//       const params = {
+//         model:modelData.id,
+//         team_ids:teamIdsParam
+//       }
+//       console.log(params)
+//       axios.get(apiLink,{params})
+//       .then(response=>{
+//         console.log("MODEL RESP",response.data);
+//         setModelStandingsData(response.data)  
+//       })
+      
+//     }else{
+//       console.log("pick a model first")
+//     }  
    
     return(
         <div className="tournamentStandingContainer">

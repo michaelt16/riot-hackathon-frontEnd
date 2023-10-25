@@ -8,7 +8,7 @@ export function LeaguesProvider({ children }:any) {
 
   useEffect(() => {
     try {
-      axios.get("http://matthewproject.click/leagues")
+      axios.get("http://api.lolpowerrankings.click/leagues")
         .then(response => {
           setLeaguesArr(response.data);
         })

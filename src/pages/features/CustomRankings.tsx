@@ -200,7 +200,9 @@ const dropDownClick = (e)=>{
               ) : orderTeamArr.length !== 0 ? (
                 <Standings data={orderTeamArr} />
               ) : (
+                <div className="centerLoader">
                 <Load />
+                </div>
               )}
 
               

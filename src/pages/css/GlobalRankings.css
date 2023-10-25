@@ -5,24 +5,22 @@
 }
 
 .globalRankingsStandingsContainer{
-    width:150vh;
-    margin-left: 255px;
+    width:110vh;
+    margin-left: 435px;
     background-color: #161123;
-    height:90vh;
-    
-
-  
+    height:auto; 
+    margin-top: -30px;
 }
 
 .centerLoader{
-    padding-top:180px;
+    padding-top:30px;
 }
 
 .globalStandingsHeader{
-    height:130px;
+    margin-top: 20px;
     width: auto;
     background-color: #161123;
-    
+    height: auto;
 }
 
 .topContainer{
@@ -30,18 +28,18 @@
     align-items: center;
     /* justify-content: center; */
     height:60px;
+    border-bottom:solid 1px #262a2e;
 }
 .numberContainer{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50vh;
+    width: 60vh;
 }
 .numberBox{
     width: 50px;
     height:40px;
     background-color: white;
-    margin: 20px;
+    margin: 5px;
+    margin-left: 20px;
     display: flex;
     align-items: center;
     justify-content: center;

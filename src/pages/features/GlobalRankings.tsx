@@ -5,17 +5,20 @@ import "../css/GlobalRankings.css"
 import { useNavigate } from "react-router-dom";
 import Standings from "../../components/Standings";
 import Load from "../../components/Load";
+import axios from "axios";
+import ModelStandings from "../../components/ModelStandings";
 interface Model{
 
     name:string,
     id:string
 }
 export default function GlobalRankings(){
+    const [modelStandingsData, setModelStandingsData] = useState()
     const [dropDown,setDropdownToggle]= useState(false)
-    const [modelName,setModelName]= useState("Select a Model")
-    const [modelData,setModelData]=useState<Model>()
-    const numbers = [5, 10, 50, 'ALL'];
-    const [amount,setAmount]=useState<string>()
+    const [modelName,setModelName]= useState("Bayesian model")
+    const [modelData,setModelData]=useState<Model>({name:"Bayesian Model",id:"bayesian"})
+    const numbers = [10, 50, 100];
+    const [amount,setAmount]=useState<number>(10)
     const models:Model[] = [{name:"Bayesian Model",id:"bayesian"}, {name:"Logistic Regression",id:"logisticregression"}, {name:"Random Forest",id:"randomforest"}]
     const navigate = useNavigate()
     const handleReturn = ()=>{
@@ -23,16 +26,14 @@ export default function GlobalRankings(){
     }
     const mockData ="s"
     const dropDownClick = (e)=>{
-     
         console.log("dropdownclicked")
         setDropdownToggle(!dropDown)
-        
     }
     useEffect(()=>{
-        setModelName("Select a Model")
+       
     },[])
     
-    const toggleAmount = (number:string)=>{
+    const toggleAmount = (number:number)=>{
         setAmount(number)
     }
     // useEffect(()=>{
@@ -45,6 +46,27 @@ export default function GlobalRankings(){
         setModelName(model.name)
         setModelData(model)
     }
+    useEffect(()=>{
+        setModelStandingsData(undefined)  
+        const apiLink = "http://api.lolpowerrankings.click/model/globalRankings"
+        const params = {
+            model:modelData?.id,
+            n_teams:amount
+        }
+        console.log(params)
+        try{
+            axios.get(apiLink,{params})
+            .then(response=>{
+                console.log("MODEL RESP",response.data);
+                setModelStandingsData(response.data)  
+            })
+        }catch(e){
+            console.log("notworking")
+        }
+       
+    },[modelData,amount])
+   
+    
     return(
         <div className="globalRankingsPage">
              <Navbar/>
@@ -89,17 +111,10 @@ export default function GlobalRankings(){
                         }
                          </div>
                     </div>
-                {mockData?(
-                    <div>
-                        <div className="globalStandingsHeader">
-                       
-                                
-                               
-                                
-                            
-                           
-                            </div>
-                        <Standings/>
+                {modelStandingsData?(
+                    <div className="globalStandingsHeader">
+                        
+                         <ModelStandings data={modelStandingsData}/>
                     </div>
 
                 ):(
