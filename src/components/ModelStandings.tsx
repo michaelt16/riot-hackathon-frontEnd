@@ -38,7 +38,7 @@ export default function ModelStandings(props){
                                            {team.team_name !== undefined ? team.team_name :''}
                                           </h3>
                                           <h3 className="winrateFontSize">
-                                            Expected Wins: {Math.round(team.expected_wins)}
+                                            Expected Wins: {Math.round(team.expected_wins * 100) / 100}
                                           </h3>
                                         </div>
                                       </div>

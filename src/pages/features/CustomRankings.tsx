@@ -40,6 +40,11 @@ export default function CustomRankings() {
      
   }, []);
 
+  useEffect (()=>{
+    console.log("item is added", orderTeamArr)
+    setModelStandingsData(undefined)
+  },[orderTeamArr])
+
 
   const handleFolderClick = (index: number, league_id:number) => {
    
@@ -115,14 +120,12 @@ const toggleModel= (model:Model)=>{
  
    
 const dropDownClick = (e)=>{
-     
   console.log("dropdownclicked")
   setDropdownToggle(!dropDown)
   
 }
 
 
-  // console.log(orderTeamArr)
   return (
     <div className="customRankingsContainer">
       <Navbar />

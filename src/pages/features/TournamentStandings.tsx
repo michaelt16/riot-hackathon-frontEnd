@@ -125,7 +125,7 @@ export default function TournamentStandings ():JSX.Element{
                      if(tournamentName=== "worlds_2022"|| tournamentName=="msi_2022"){
                     console.log("working")
                     setStage("knockouts")
-                        }else if (tournamentName==="worlds_2021"){
+                        }else if (tournamentName==="worlds_2021"||tournamentName==="worlds_2020"||tournamentName=="msi_2021"){
                             setStage("Playoffs")
                         }else{
                             setStandingsData(data)
